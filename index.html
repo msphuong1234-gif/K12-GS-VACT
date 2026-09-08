@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>K12 • Global Success • V-ACT</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#17324d}
+.wrap{max-width:1080px;margin:auto;padding:30px 16px} header{text-align:center;margin-bottom:22px}
+h1{margin:0 0 8px;font-size:clamp(28px,5vw,46px)} .sub{color:#62778c}
+.search{width:100%;padding:14px 16px;border:1px solid #dce5ef;border-radius:14px;font-size:16px;margin:18px 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.card{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e1e9f2;border-radius:18px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.07)}
+.card:hover{transform:translateY(-2px)} .unit{font-size:22px;font-weight:700} .count{margin-top:8px;color:#718397}
+.status{text-align:center;color:#718397;margin:10px 0 18px} footer{text-align:center;color:#8998a8;margin-top:28px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><h1>K12 • GLOBAL SUCCESS • V-ACT</h1><div class="sub">Chọn Unit để học và luyện tập</div></header>
+<input id="search" class="search" placeholder="Tìm Unit hoặc Lesson...">
+<div id="status" class="status">Đang đọc bài học từ GitHub...</div>
+<main id="grid" class="grid"></main>
+<footer>Grade 12 • Global Success • V-ACT</footer>
+</div>
+<script>
+const OWNER="msphuong1234-gif", REPO="K12-GS-VACT", BRANCH="main";
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/contents`;
+const grid=document.getElementById('grid'), statusEl=document.getElementById('status'), search=document.getElementById('search');
+let units=[];
+
+async function getJSON(url){
+  const r=await fetch(url,{headers:{'Accept':'application/vnd.github+json'}});
+  if(!r.ok) throw new Error('GitHub API '+r.status);
+  return r.json();
+}
+function isLessonFile(name){
+  return /\.html?$/i.test(name) && name.toLowerCase()!=='index.html';
+}
+async function load(){
+  try{
+    const root=await getJSON(`${API}?ref=${encodeURIComponent(BRANCH)}`);
+    const dirs=root.filter(x=>x.type==='dir' && /^UNIT[-_ ]?\d+$/i.test(x.name))
+                   .sort((a,b)=>(parseInt(a.name.match(/\d+/)[0])-parseInt(b.name.match(/\d+/)[0])));
+    units=await Promise.all(dirs.map(async d=>{
+      let count=0, lessonNames=[];
+      try{
+        const files=await getJSON(`${API}/${encodeURIComponent(d.name)}?ref=${encodeURIComponent(BRANCH)}`);
+        const lessons=files.filter(x=>x.type==='file' && isLessonFile(x.name));
+        count=lessons.length; lessonNames=lessons.map(x=>x.name);
+      }catch(e){}
+      return {name:d.name,count,lessonNames};
+    }));
+    render();
+    statusEl.textContent=`Đã phát hiện ${units.reduce((s,u)=>s+u.count,0)} bài học trong ${units.length} Unit.`;
+  }catch(e){
+    statusEl.textContent='Không đọc được danh sách GitHub lúc này. Hãy tải lại trang sau ít phút.';
+    for(let i=1;i<=9;i++) units.push({name:`UNIT-${i}`,count:'?',lessonNames:[]});
+    render();
+  }
+}
+function render(){
+  const q=search.value.trim().toLowerCase();
+  grid.innerHTML='';
+  units.filter(u=>!q || u.name.toLowerCase().includes(q) || u.lessonNames.some(n=>n.toLowerCase().includes(q)))
+       .forEach(u=>{
+          const a=document.createElement('a'); a.className='card'; a.href=`${u.name}/`;
+          a.innerHTML=`<div class="unit">${u.name.replace('-',' ')}</div><div class="count">${u.count} bài học • Mở Unit →</div>`;
+          grid.appendChild(a);
+       });
+}
+search.addEventListener('input',render);
+load();
+</script>
+</body>
+</html>
