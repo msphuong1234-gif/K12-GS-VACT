@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 • Lesson 1 – Interactive Review</title>
+<style>
+:root{
+  --bg:#f4f7fb; --card:#ffffff; --text:#172033; --muted:#667085;
+  --primary:#315efb; --primary2:#173ea5; --ok:#18794e; --bad:#b42318;
+  --border:#d8dee9; --soft:#eef3ff; --warn:#fff6e5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.shell{max-width:1180px;margin:0 auto;padding:18px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(244,247,251,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+.topbar .inner{max-width:1180px;margin:auto;padding:10px 18px;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:15px}
+.stepper{display:flex;gap:7px;flex-wrap:wrap}
+.step{font-size:12px;padding:6px 9px;border-radius:999px;background:#fff;border:1px solid var(--border);color:var(--muted)}
+.step.active{color:#fff;background:var(--primary);border-color:var(--primary)}
+.hero{background:linear-gradient(135deg,#173ea5,#315efb);color:#fff;border-radius:22px;padding:28px;margin:18px 0;box-shadow:0 14px 34px rgba(49,94,251,.18)}
+.hero h1{margin:0 0 6px;font-size:clamp(26px,4vw,42px);line-height:1.15}
+.hero p{margin:5px 0;opacity:.95}
+.section{margin:24px 0 38px}
+.section-head{display:flex;gap:12px;justify-content:space-between;align-items:flex-end;margin-bottom:14px;flex-wrap:wrap}
+.section-head h2{margin:0;font-size:24px}
+.section-head p{margin:4px 0 0;color:var(--muted)}
+.progressbox{background:#fff;border:1px solid var(--border);border-radius:16px;padding:12px 14px;min-width:290px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font-size:12px;text-align:center}
+.stat b{display:block;font-size:15px}
+.bar{height:8px;background:#e9edf5;border-radius:999px;overflow:hidden;margin-top:9px}
+.bar>span{display:block;height:100%;background:var(--primary);width:0%;transition:.25s}
+.card{background:var(--card);border:1px solid var(--border);border-radius:17px;padding:18px;margin:12px 0;box-shadow:0 5px 18px rgba(16,24,40,.04)}
+.qnum{font-weight:800;color:var(--primary);margin-bottom:5px}
+.qprompt{font-size:17px;font-weight:650;white-space:pre-line}
+.options{display:grid;gap:9px;margin-top:13px}
+.option{width:100%;text-align:left;border:1px solid var(--border);background:#fff;border-radius:12px;padding:11px 13px;min-height:46px;transition:.15s}
+.option:hover:not(:disabled){border-color:#95a7ff;background:#f8faff}
+.option:focus-visible,.btn:focus-visible,input:focus-visible{outline:3px solid #aebcff;outline-offset:2px}
+.option.correct{border-color:#7ac5a4;background:#effaf5}
+.option.wrong{border-color:#f1a3a0;background:#fff3f2}
+.option:disabled{cursor:default;color:var(--text)}
+.feedback{margin-top:13px;border-radius:12px;padding:12px 14px;border-left:4px solid var(--border);background:#f8fafc}
+.feedback.ok{border-left-color:var(--ok);background:#effaf5}
+.feedback.bad{border-left-color:var(--bad);background:#fff4f3}
+.feedback h4{margin:8px 0 4px}
+.feedback p{margin:5px 0}
+.feedback ul{margin:5px 0 5px 20px;padding:0}
+.tag{display:inline-block;font-size:11px;border:1px solid #ccd6ff;background:#f2f5ff;color:#3047a4;padding:3px 7px;border-radius:999px;margin:2px 4px 2px 0}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.btn{border:0;border-radius:11px;padding:11px 15px;min-height:44px;font-weight:700;background:var(--primary);color:white}
+.btn.secondary{background:white;color:var(--primary);border:1px solid #9caeff}
+.btn.ghost{background:#fff;color:#344054;border:1px solid var(--border)}
+.btn.danger{background:#b42318}
+.reading-layout{display:grid;grid-template-columns:minmax(300px,42%) 1fr;gap:16px;align-items:start}
+.passage{position:sticky;top:72px;max-height:78vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:17px;padding:18px}
+.passage h3{margin-top:0}
+.passage p{margin:0 0 13px}
+.knowledge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kcard{background:white;border:1px solid var(--border);border-radius:15px;padding:15px}
+.kcard h3{margin:0 0 8px;color:var(--primary2)}
+.kcard p{margin:5px 0}
+.remediation-note{background:var(--warn);border:1px solid #f0d7a5;padding:12px 14px;border-radius:12px;margin:10px 0 16px}
+.fillrow{display:flex;gap:8px;margin-top:12px;align-items:center}
+.fillrow input{flex:1;min-height:44px;padding:9px 11px;border:1px solid var(--border);border-radius:10px}
+.locked{opacity:.82}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sumcard{background:#fff;border:1px solid var(--border);border-radius:15px;padding:16px;text-align:center}
+.sumcard b{display:block;font-size:24px;color:var(--primary2)}
+.gate{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 20% 20%,#dbe5ff,transparent 36%),radial-gradient(circle at 80% 80%,#e6ecff,transparent 35%),#f5f7fb}
+.gate-card{width:min(460px,100%);background:#fff;border:1px solid var(--border);border-radius:24px;padding:26px;box-shadow:0 18px 50px rgba(16,24,40,.12)}
+.gate-card h1{margin:0 0 7px}
+.gate-card p{color:var(--muted)}
+.gate-card input{width:100%;min-height:48px;border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:8px 0 10px}
+.notice{font-size:14px;min-height:24px}
+.small{font-size:13px;color:var(--muted)}
+.cta{border:1px dashed #9caeff;background:#f3f6ff;border-radius:16px;padding:18px;text-align:center;margin:20px 0}
+.view{display:none}
+.view.active{display:block}
+.dashboard{margin:24px 0 40px}
+.dashboard-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.dash-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(16,24,40,.05);display:flex;flex-direction:column;gap:10px}
+.dash-card h3{margin:0;color:var(--primary2);font-size:21px}
+.dash-card p{margin:0;color:var(--muted);flex:1}
+.dash-card .btn{width:100%;margin-top:8px}
+.home-title{margin:6px 0 4px;font-size:28px}
+.home-sub{color:var(--muted);margin:0 0 18px}
+@media(max-width:820px){.dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:820px){
+  .reading-layout{grid-template-columns:1fr}.passage{position:static;max-height:none}
+  .knowledge-grid,.summary{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:560px){
+  .shell{padding:11px}.hero{padding:20px;border-radius:17px}.card{padding:14px}
+  .progressbox{min-width:100%}.stats{grid-template-columns:repeat(2,1fr)}
+  .stepper{display:none}.qprompt{font-size:16px}.fillrow{flex-direction:column;align-items:stretch}
+}
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <div class="gate-card">
+    <div class="small">GLOBAL SUCCESS 12 • ĐGNL</div>
+    <h1>BÀI ÔN TẬP VÀ LUYỆN TẬP</h1>
+    <p><b>Unit 1 • Life Stories We Admire</b><br>Lesson 1 • Getting Started</p>
+    <label for="pw"><b>Nhập mật khẩu</b></label>
+    <input id="pw" type="password" autocomplete="off" aria-describedby="gateMsg">
+    <button id="openBtn" class="btn" style="width:100%">MỞ BÀI</button>
+    <div id="gateMsg" class="notice" aria-live="polite"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <div class="topbar">
+    <div class="inner">
+      <div class="brand">UNIT 1 • LESSON 1</div>
+      <div class="stepper">
+        <span class="step active" data-step="p1">1. Ôn bài cũ</span>
+        <span class="step" data-step="p2">2. Luyện tập</span>
+        <span class="step" data-step="p3">3. Củng cố</span>
+        <span class="step" data-step="sum">4. Tổng kết</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="shell">
+    <div class="hero">
+      <div>UNIT 1 • LIFE STORIES WE ADMIRE</div>
+      <h1>LESSON 1 • GETTING STARTED</h1>
+      <p>Ôn bài cũ → Luyện tập có phản hồi → Hệ thống hóa → Củng cố theo lỗi sai</p>
+    </div>
+
+    <section id="homeView" class="dashboard view active">
+      <h2 class="home-title">CHỌN PHẦN HỌC</h2>
+      <p class="home-sub">Học sinh có thể chọn bất kỳ phần nào, không bắt buộc học theo thứ tự.</p>
+      <div class="dashboard-grid">
+        <div class="dash-card">
+          <h3>PHẦN 1 – ÔN BÀI CŨ</h3>
+          <p>40 câu Review & Retrieval Practice. Chấm ngay, khóa đáp án sau lần chọn đầu tiên.</p>
+          <button class="btn" onclick="showView('p1')">VÀO ÔN BÀI CŨ</button>
+        </div>
+        <div class="dash-card">
+          <h3>PHẦN 2 – LUYỆN TẬP</h3>
+          <p>23 câu ĐGNL: Lexical Control, Error Identification, Restatement và Reading Transfer.</p>
+          <button class="btn" onclick="showView('p2')">VÀO LUYỆN TẬP</button>
+        </div>
+        <div class="dash-card">
+          <h3>PHẦN 3 – CỦNG CỐ</h3>
+          <p>Kiến thức cần nhớ và bài củng cố. Có thể học độc lập hoặc vào từ cuối Phần 2.</p>
+          <button class="btn" onclick="openPart3()">VÀO CỦNG CỐ</button>
+        </div>
+      </div>
+      <div class="btnrow" style="margin-top:20px">
+        <button class="btn ghost" onclick="showView('sum')">XEM TỔNG KẾT</button>
+      </div>
+    </section>
+
+    <section id="p1" class="section view">
+      <div class="section-head">
+        <div>
+          <h2>PHẦN 1 – ÔN BÀI CŨ</h2>
+          <p>Review & Retrieval Practice • 40 câu • Chấm ngay • Mỗi câu chỉ trả lời một lần.</p>
+        </div>
+        <div id="prog1" class="progressbox"></div>
+      </div>
+      <div id="part1"></div>
+      <div class="btnrow">
+        <button class="btn secondary" onclick="resetSection('p1')">LÀM LẠI</button>
+        <button class="btn ghost" onclick="showView('homeView')">TRỞ LẠI</button>
+      </div>
+    </section>
+
+    <section id="p2" class="section view">
+      <div class="section-head">
+        <div>
+          <h2>PHẦN 2 – LUYỆN TẬP</h2>
+          <p>ĐGNL Language in Context • Error Identification • Best Restatement • Reading Transfer</p>
+        </div>
+        <div id="prog2" class="progressbox"></div>
+      </div>
+      <div id="part2"></div>
+      <div class="btnrow">
+        <button class="btn secondary" onclick="resetSection('p2')">LÀM LẠI</button>
+        <button class="btn" onclick="openPart3()">CỦNG CỐ</button>
+        <button class="btn ghost" onclick="showView('homeView')">TRỞ LẠI</button>
+      </div>
+    </section>
+
+    <section id="p3" class="section view">
+      <div class="section-head">
+        <div>
+          <h2>PHẦN 3 – CỦNG CỐ SAU BÀI TẬP</h2>
+          <p>Kiến thức cần nhớ + câu củng cố ưu tiên đúng nhóm kiến thức em còn sai.</p>
+        </div>
+        <div id="prog3" class="progressbox"></div>
+      </div>
+
+      <h3 id="knowledge">PHẦN 3A – KIẾN THỨC CẦN NHỚ</h3>
+      <div id="knowledgeGrid" class="knowledge-grid"></div>
+
+      <h3 style="margin-top:24px">PHẦN 3B – BÀI TẬP CỦNG CỐ</h3>
+      <div id="remediationNote" class="remediation-note"></div>
+      <div id="part3"></div>
+      <div class="btnrow">
+        <button class="btn secondary" onclick="resetSection('p3')">LÀM LẠI</button>
+        <button class="btn ghost" onclick="document.getElementById('knowledge').scrollIntoView({behavior:'smooth'})">XEM LẠI KIẾN THỨC</button>
+        <button class="btn ghost" onclick="showView('homeView')">TRỞ LẠI</button>
+      </div>
+    </section>
+
+    <section id="sum" class="section view">
+      <div class="section-head"><div><h2>TỔNG KẾT</h2><p>Điểm tổng = tổng số câu đúng / tổng số câu có chấm điểm.</p></div></div>
+      <div id="summary" class="summary"></div>
+      <div class="btnrow">
+        <button class="btn danger" onclick="resetAll()">LÀM LẠI TOÀN BỘ</button>
+        <button class="btn ghost" onclick="showView('homeView')">TRỞ LẠI</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+"use strict";
+
+const sectionState = {p1:{}, p2:{}, p3:{}};
+let part3Items = [];
+
+function O(id,text,why=""){ return {id,text,why}; }
+function Q(id, prompt, options, correctId, primaryConcept, secondaryConcepts=[], explanation="", shuffleSafe=true, optionShuffleSafe=true){
+  return {id,prompt,type:"mcq",options,correctId,primaryConcept,secondaryConcepts,explanation,shuffleSafe,optionShuffleSafe};
+}
+function F(id,prompt,acceptedAnswers,primaryConcept,reminder){
+  return {id,prompt,type:"fill",acceptedAnswers,primaryConcept,secondaryConcepts:[],reminder,shuffleSafe:true};
+}
+
+const part1 = [
+Q("r1","“keep a diary” means ______.",[O("a","viết/giữ nhật ký"),O("b","viết tiểu sử cho ai"),O("c","ghi lại số liệu nghiên cứu"),O("d","lưu giữ tài liệu lịch sử")],"a","vocab-meaning"),
+Q("r2","“a personal account of” means ______.",[O("a","một nghiên cứu khoa học về"),O("b","một lời kể cá nhân về"),O("c","một báo cáo chính thức về"),O("d","một bản thống kê chi tiết về")],"b","chunk-account"),
+Q("r3","“devote one’s life to” means ______.",[O("a","thay đổi cuộc đời vì"),O("b","kể lại cuộc đời của"),O("c","cống hiến cuộc đời cho"),O("d","bảo vệ cuộc sống khỏi")],"c","devote-to"),
+Q("r4","“gain recognition for” means ______.",[O("a","được công nhận nhờ"),O("b","được truyền cảm hứng bởi"),O("c","được hỗ trợ để"),O("d","được bảo vệ khỏi")],"a","recognition"),
+Q("r5","“overcome adversity” means ______.",[O("a","đạt được thành tựu"),O("b","vượt qua nghịch cảnh"),O("c","đối mặt với chỉ trích"),O("d","giải quyết bất đồng")],"b","adversity"),
+Q("r6","“have a profound impact on” means ______.",[O("a","có hiểu biết sâu sắc về"),O("b","có đóng góp trực tiếp cho"),O("c","có ảnh hưởng sâu sắc đến"),O("d","có trách nhiệm lớn đối với")],"c","impact"),
+Q("r7","“leave a lasting legacy” means ______.",[O("a","để lại ảnh hưởng lâu dài"),O("b","ghi lại trải nghiệm quá khứ"),O("c","đạt được thành tựu lớn"),O("d","nhận được sự công nhận")],"a","legacy"),
+Q("r8","“face social barriers” means ______.",[O("a","tạo ra thay đổi xã hội"),O("b","đối mặt với rào cản xã hội"),O("c","đóng góp cho cộng đồng"),O("d","vượt qua khó khăn tài chính")],"b","social-barriers"),
+Q("r9","During her youth, she decided to study ______ and later became a doctor.",[O("a","medical"),O("b","medicine"),O("c","surgeon"),O("d","surgery")],"b","word-choice"),
+Q("r10","She worked ______ a surgeon in a field hospital during the resistance war.",[O("a","for"),O("b","like"),O("c","as"),O("d","by")],"c","work-as"),
+Q("r11","Doctors sometimes risk their own lives to ______ the lives of others.",[O("a","keep"),O("b","save"),O("c","hold"),O("d","remain")],"b","collocation-save"),
+Q("r12","She passed away ______ the age of 27.",[O("a","on"),O("b","in"),O("c","by"),O("d","at")],"d","preposition-age"),
+Q("r13","Many years later, the diary was returned ______ her family.",[O("a","to"),O("b","for"),O("c","with"),O("d","from")],"a","return-to"),
+Q("r14","She is remembered ______ her courage and dedication.",[O("a","with"),O("b","about"),O("c","for"),O("d","by")],"c","remembered-for"),
+Q("r15","Despite the danger, she remained committed ______ treating injured people.",[O("a","for"),O("b","to"),O("c","with"),O("d","on")],"b","committed-to"),
+Q("r16","Her medical work made a significant contribution ______ the care of wounded soldiers.",[O("a","for"),O("b","in"),O("c","with"),O("d","to")],"d","contribution-to"),
+Q("r17","Her diary offers valuable insights ______ everyday life during the war.",[O("a","into"),O("b","about"),O("c","for"),O("d","from")],"a","insights-into"),
+Q("r18","After years of dedicated work, she gained recognition ______ her achievements.",[O("a","with"),O("b","at"),O("c","for"),O("d","on")],"c","recognition"),
+Q("r19","Her achievements eventually received international ______.",[O("a","recognise"),O("b","recognition"),O("c","recognised"),O("d","recognisable")],"b","word-family-recognition"),
+Q("r20","She made an important ______ to the development of medical care.",[O("a","contribute"),O("b","contributor"),O("c","contribution"),O("d","contributing")],"c","word-family-contribution"),
+Q("r21","Her courage and ______ helped her continue despite great difficulties.",[O("a","determine"),O("b","determined"),O("c","determination"),O("d","determining")],"c","word-family-determination"),
+Q("r22","A person who continues trying despite difficulty can be described as ______.",[O("a","persistent"),O("b","persistence"),O("c","persist"),O("d","persistently")],"a","word-family-persist"),
+Q("r23","Her life story has been a source of ______ for generations of young people.",[O("a","inspire"),O("b","inspiring"),O("c","inspired"),O("d","inspiration")],"d","word-family-inspire"),
+Q("r24","Winning the award was one of her greatest ______.",[O("a","achieve"),O("b","achievements"),O("c","achievable"),O("d","achieving")],"b","word-family-achievement"),
+Q("r25","“become acknowledged” is closest in meaning to ______.",[O("a","face social barriers"),O("b","gain recognition"),O("c","demonstrate determination"),O("d","overcome adversity")],"b","recognition"),
+Q("r26","“continue despite difficulty” is closest in meaning to ______.",[O("a","inspire"),O("b","recognise"),O("c","persist"),O("d","achieve")],"c","persist"),
+Q("r27","The diary gives readers a personal ______ of life in a wartime field hospital.",[O("a","account"),O("b","result"),O("c","recognition"),O("d","contribution")],"a","chunk-account"),
+Q("r28","During her ______, she developed a strong desire to help other people.",[O("a","resistance"),O("b","youth"),O("c","legacy"),O("d","adversity")],"b","vocab-youth"),
+Q("r29","A temporary medical centre established near an area of conflict is called a ______.",[O("a","social barrier"),O("b","medical account"),O("c","field hospital"),O("d","resistance centre")],"c","field-hospital"),
+Q("r30","Although she faced great danger, the young doctor ______ determination and continued caring for her patients.",[O("a","gained"),O("b","demonstrated"),O("c","offered"),O("d","verified")],"b","demonstrate-determination"),
+Q("r31","Her courage and dedication continue to ______ young people today.",[O("a","inspiration"),O("b","inspiring"),O("c","inspire"),O("d","inspired")],"c","word-family-inspire"),
+Q("r32","Before publishing the report, the researchers carefully ______ the figures to make sure they were accurate.",[O("a","recognised"),O("b","achieved"),O("c","verified"),O("d","persisted")],"c","verify"),
+Q("r33","Her work had such a profound ______ on medical care that its influence continued for many years.",[O("a","impact"),O("b","account"),O("c","barrier"),O("d","insight")],"a","impact"),
+Q("r34","Despite discrimination and limited opportunities, she managed to ______ adversity and build a successful career.",[O("a","recognise"),O("b","overcome"),O("c","contribute"),O("d","determine")],"b","adversity"),
+Q("r35","Which expression is correctly formed?",[O("a","devote one’s life for helping others"),O("b","devote one’s life to helping others"),O("c","devote one’s life with helping others"),O("d","devote one’s life on helping others")],"b","devote-to"),
+Q("r36","Which expression means “đem lại những hiểu biết sâu sắc/có giá trị về”?",[O("a","offer valuable insights into"),O("b","make a significant contribution to"),O("c","have a profound impact on"),O("d","demonstrate determination")],"a","insights-into"),
+Q("r37","Her achievements were widely ______ after her life story became known to the public.",[O("a","recognition"),O("b","recognise"),O("c","recognised"),O("d","recognisably")],"c","word-family-recognition"),
+Q("r38","Which expression means “trong thời kỳ kháng chiến”?",[O("a","during one’s youth"),O("b","during the resistance war"),O("c","throughout one’s career"),O("d","during a social movement")],"b","resistance-war"),
+Q("r39","Which sentence best expresses the idea of “leave a lasting legacy”?",[O("a","Her influence continued long after her death."),O("b","She returned her belongings to her family."),O("c","She recorded her experiences in a diary."),O("d","She received medical training when young.")],"a","legacy"),
+Q("r40","Which sentence best expresses the meaning of “remain committed to”?",[O("a","She continued devoting herself to her work despite difficulties."),O("b","She became well known after receiving an important award."),O("c","She changed her plans whenever she faced a problem."),O("d","She completed the task earlier than other people expected.")],"a","committed-to")
+];
+
+const p2ex = {
+q1:`<h4>ĐÁP ÁN: account</h4><p><b>Nghĩa câu:</b> Cuốn nhật ký mang đến cho người đọc một lời kể cá nhân về cuộc sống trong bệnh viện dã chiến thời chiến.</p><p><b>Cụm cần nhớ:</b> <b>a personal account of + N</b> = lời kể/tường thuật cá nhân về...</p><ul><li><b>instruction</b>: lời hướng dẫn; thường dùng <i>give/follow instructions</i>.</li><li><b>schedule</b>: lịch trình.</li><li><b>announcement</b>: thông báo.</li></ul>`,
+q2:`<h4>ĐÁP ÁN: committed</h4><p><b>Cấu trúc:</b> <b>remain/be committed to + N/V-ing</b>. Ở đây <i>to</i> là giới từ nên theo sau là <i>treating</i>.</p><p><b>Despite constant danger</b> tạo ý tương phản: dù nguy hiểm, bà vẫn tận tâm chữa trị.</p><ul><li><i>related to</i> = liên quan đến.</li><li><i>available</i> = sẵn có.</li><li><i>familiar with</i> = quen thuộc với.</li></ul>`,
+q3:`<h4>ĐÁP ÁN: contribution</h4><p><b>Collocation:</b> <b>make a significant contribution to + N</b> = có đóng góp đáng kể cho...</p><ul><li><i>response to</i> = phản ứng đối với.</li><li><i>have/gain access to</i> = có/được quyền tiếp cận.</li><li><i>direction</i> không tạo collocation phù hợp với <i>make a significant ... to</i>.</li></ul>`,
+q4:`<h4>ĐÁP ÁN: insights</h4><p><b>Collocation:</b> <b>offer/provide valuable insights into + N</b> = cung cấp những hiểu biết sâu sắc về...</p><p><i>opinions</i> thường đi với <i>about/on</i>; <i>notices</i> và <i>occasions</i> không phù hợp nghĩa và cấu trúc.</p>`,
+q5:`<h4>ĐÁP ÁN: recognition</h4><p><b>gain wider recognition</b> = nhận được sự công nhận rộng rãi hơn.</p><p><i>permission</i> = sự cho phép; <i>attendance</i> = sự tham dự; <i>prevention</i> = sự ngăn ngừa.</p>`,
+q6:`<h4>ĐÁP ÁN: to helping</h4><p><b>Grammar:</b> <b>devote + time/life/oneself + to + N/V-ing</b>. <i>to</i> là giới từ, vì vậy dùng <i>helping</i>, không dùng <i>to help</i>.</p><p>Nhóm dễ nhầm: <i>be committed to doing, look forward to doing, be used to doing</i>.</p>`,
+q7:`<h4>LỖI: has → have</h4><p><b>Her achievements</b> là chủ ngữ số nhiều. Present Perfect: <b>plural subject + have + V3</b>.</p><p>Câu đúng: <i>Her achievements have inspired many young people to follow careers in medicine.</i></p>`,
+q8:`<h4>LỖI: for → to</h4><p><b>devote oneself to + V-ing</b> → <i>devoted herself to caring</i>.</p><p>Câu đúng: <i>The doctor devoted herself to caring for wounded soldiers throughout the war.</i></p>`,
+q9:`<h4>LỖI: who → which</h4><p><b>the field hospital</b> là vật/nơi chốn, nên mệnh đề quan hệ không xác định dùng <b>which</b>, không dùng <i>who</i>.</p><p>Câu đúng: <i>The field hospital, which was located near the front line, treated many injured soldiers.</i></p>`,
+q10:`<h4>LỖI: her → them</h4><p><b>Lan and Mai</b> là hai người nên đại từ tân ngữ phải là <b>them</b>. Từ <i>together</i> củng cố điều này.</p><p>Cấu trúc đúng: <b>ask somebody to do something</b>.</p>`,
+q11:`<h4>LỖI: soldier's → soldiers'</h4><p><b>several</b> → danh từ số nhiều <i>soldiers</i>. Sở hữu cách số nhiều kết thúc bằng -s: <b>soldiers'</b>.</p><p>So sánh: <i>one soldier's injury</i> ↔ <i>several soldiers' injuries</i>.</p>`,
+q12:`<h4>ĐÁP ÁN: Her work strongly influenced the way medicine was practised.</h4><p><b>Paraphrase:</b> <i>have a profound impact on</i> ↔ <i>strongly influence</i>; <i>medical practice</i> ↔ <i>the way medicine was practised</i>.</p><p>Các phương án khác đảo chiều tác động, làm yếu mức độ <i>profound</i>, hoặc thêm nghĩa “recorded”.</p>`,
+q13:`<h4>ĐÁP ÁN: She is said to have devoted...</h4><p><b>Reporting passive:</b> People say that S + past verb → <b>S + is/are said to have + V3</b>.</p><p>Hành động <i>devoted</i> đã xảy ra trong quá khứ nên dùng <i>to have devoted</i>.</p>`,
+q14:`<h4>ĐÁP ÁN: By the time..., she had already begun...</h4><p><b>Timeline:</b> bắt đầu làm ở bệnh viện xảy ra <u>trước</u> khi hoàn thành đào tạo y khoa.</p><p><b>By the time + Past Simple, Past Perfect</b> diễn đạt đúng hành động quá khứ xảy ra sớm hơn.</p><p>Các đáp án A và D đảo thứ tự thời gian; C thêm thông tin “stopped working”.</p>`,
+q15:`<h4>ĐÁP ÁN: Determination and support helped her deal successfully with serious difficulties.</h4><p><b>Paraphrase:</b> <i>overcome adversity</i> ↔ <i>deal successfully with serious difficulties</i>.</p><p>Không được đổi thành “tránh khó khăn” hoặc “mọi khó khăn tự biến mất”.</p>`,
+q16:`<h4>ĐÁP ÁN: It is possible that...</h4><p><b>may have + V3</b> = có thể đã... → khả năng trong quá khứ, không phải sự chắc chắn.</p><p><i>may</i> ↔ <i>it is possible that</i>; <i>many</i> không thể đổi thành <i>all/every</i>.</p>`
+};
+
+const readingPassage = [
+`<b>Paragraph 1.</b> When Katherine Johnson joined the National Advisory Committee for Aeronautics in 1953, opportunities for African American women in advanced mathematics were extremely limited. Johnson, however, had shown exceptional mathematical ability from an early age. At the organisation that later became NASA, she calculated flight paths, launch windows and emergency return routes for space missions.`,
+`<b>Paragraph 2.</b> Her work demanded both technical accuracy and the confidence to question calculations when necessary. Before John Glenn’s orbital flight in 1962, he reportedly asked Johnson to verify the figures produced by electronic computers. Her calculations helped strengthen confidence in the new technology at a time when computers were still unfamiliar to many people.`,
+`<b>Paragraph 3.</b> For years, Johnson’s contribution received little public attention. Recognition came much later, including the Presidential Medal of Freedom in 2015. Her career is important not simply because she overcame social barriers, but because her expertise directly contributed to major achievements in space exploration. Her story shows that professional excellence and persistence can leave a lasting legacy even when recognition is delayed.`
+];
+
+const readEx = {
+q17:`<h4>DẠNG: Vocabulary in Context • ĐÁP ÁN: check for accuracy</h4><p><b>Evidence – Paragraph 2:</b> “asked Johnson to verify the figures produced by electronic computers.” Câu trước nhấn mạnh <i>technical accuracy</i>.</p><p><b>verify the figures</b> ↔ <b>check the calculations for accuracy</b> = kiểm tra/xác minh số liệu để đảm bảo chính xác.</p><ul><li><i>replace completely</i>: thay thế hoàn toàn – sai hành động.</li><li><i>record permanently</i>: ghi lại vĩnh viễn – không có trong ngữ cảnh.</li><li><i>explain publicly</i>: giải thích công khai – không liên quan.</li></ul>`,
+q18:`<h4>DẠNG: Reference • ĐÁP ÁN: electronic computers</h4><p><b>Chuỗi quy chiếu:</b> <i>electronic computers → the new technology → computers</i>.</p><p><b>Evidence – Paragraph 2:</b> “figures produced by electronic computers. Her calculations helped strengthen confidence in the new technology at a time when computers were still unfamiliar...”</p>`,
+q19:`<h4>DẠNG: Detail • ĐÁP ÁN: She checked calculations produced by computers.</h4><p><b>Evidence – Paragraph 2:</b> John Glenn “asked Johnson to verify the figures produced by electronic computers.”</p><p><b>Paraphrase:</b> <i>verify the figures</i> ↔ <i>checked calculations</i>.</p><p>Passage không nói bà thiết kế tàu, đào tạo phi hành gia hay phát triển chiếc máy tính đầu tiên.</p>`,
+q20:`<h4>DẠNG: Inference • ĐÁP ÁN: Important contributions may remain unrecognised for many years.</h4><p><b>Text states – Paragraph 3:</b> “For years, Johnson’s contribution received little public attention. Recognition came much later...”</p><p><b>We can infer:</b> một đóng góp quan trọng có thể không được công nhận trong nhiều năm.</p><p>B sai vì trái với <i>much later</i>; C quá tuyệt đối với <i>guaranteed</i>; D suy diễn việc kiểm tra máy tính thành “distrusted all computers”.</p>`,
+q21:`<h4>DẠNG: NOT Stated • ĐÁP ÁN: She developed the electronic computers later used by NASA.</h4><p>A có evidence ở Paragraph 1 (flight paths, launch windows, return routes). B có evidence ở Paragraph 2 (verify figures). D có evidence ở Paragraph 3 (recognition came much later).</p><p><b>C không có evidence:</b> bà kiểm tra số liệu do máy tính tạo ra, không phải phát triển máy tính.</p>`,
+q22:`<h4>DẠNG: Writer's Purpose • ĐÁP ÁN: To illustrate the major public recognition she eventually received.</h4><p><b>Evidence – Paragraph 3:</b> “Recognition came much later, including the Presidential Medal of Freedom in 2015.”</p><p><b>Chức năng:</b> ý khái quát <i>Recognition came much later</i> → ví dụ cụ thể <i>Presidential Medal of Freedom</i>.</p>`,
+q23:`<h4>DẠNG: Best Summary • ĐÁP ÁN: Johnson’s expertise and persistence contributed to space exploration despite social barriers.</h4><p><b>Toàn bài:</b> social barriers → exceptional expertise → contribution to space missions → delayed recognition → lasting legacy.</p><p>C bao quát đủ các ý lớn. A quá hẹp vào giải thưởng; B trái với việc công việc của bà vẫn quan trọng; D sai trọng tâm vì passage không nói sự nghiệp của bà chủ yếu nhằm cải thiện cơ hội giáo dục cho phụ nữ.</p>`
+};
+
+const part2 = [
+Q("q1","The diary gives readers a personal ______ of life in a wartime field hospital.",[O("a","instruction"),O("b","account"),O("c","schedule"),O("d","announcement")],"b","chunk-account",[],p2ex.q1),
+Q("q2","Despite constant danger, the young doctor remained ______ to treating injured people.",[O("a","related"),O("b","available"),O("c","familiar"),O("d","committed")],"d","committed-to",[],p2ex.q2),
+Q("q3","Her medical work made a significant ______ to the care of wounded soldiers.",[O("a","contribution"),O("b","response"),O("c","access"),O("d","direction")],"a","contribution-to",[],p2ex.q3),
+Q("q4","The memoir offers valuable ______ into the daily difficulties faced by medical workers.",[O("a","notices"),O("b","opinions"),O("c","insights"),O("d","occasions")],"c","insights-into",[],p2ex.q4),
+Q("q5","Years later, the publication of her diary helped her gain wider ______.",[O("a","permission"),O("b","recognition"),O("c","attendance"),O("d","prevention")],"b","recognition",[],p2ex.q5),
+Q("q6","She devoted much of her life ______ people in difficult circumstances.",[O("a","to helping"),O("b","for helping"),O("c","to help"),O("d","helping")],"a","devote-to",["gerund-after-preposition"],p2ex.q6),
+Q("q7","Her achievements has inspired many young people to follow careers in medicine.\nFind the error.",[O("a","achievements"),O("b","has"),O("c","to follow"),O("d","in")],"b","subject-verb-agreement",["present-perfect"],p2ex.q7),
+Q("q8","The doctor devoted herself for caring for wounded soldiers throughout the war.\nFind the error.",[O("a","devoted"),O("b","for"),O("c","wounded"),O("d","war")],"b","devote-to",["preposition"],p2ex.q8),
+Q("q9","The field hospital, who was located near the front line, treated many injured soldiers.\nFind the error.",[O("a","field"),O("b","who"),O("c","located"),O("d","many")],"b","relative-clause",[],p2ex.q9),
+Q("q10","Lan and Mai submitted a joint biography project, but their teacher asked her to revise the final paragraph together.\nFind the error.",[O("a","submitted"),O("b","their"),O("c","her"),O("d","to revise")],"c","pronoun-reference",["ask-sb-to-do"],p2ex.q10),
+Q("q11","The diary described several soldier's injuries and the medical team's efforts to save them during the war.\nFind the error.",[O("a","described"),O("b","soldier's"),O("c","efforts"),O("d","during")],"b","plural-possessive",[],p2ex.q11),
+Q("q12","Her work had a profound impact on medical practice.",[O("a","Later medical practice had a much stronger effect on her work."),O("b","Her work was important mainly because it recorded medical practice."),O("c","Medical practice changed her work only to a limited extent."),O("d","Her work strongly influenced the way medicine was practised.")],"d","restatement-impact",["paraphrase"],p2ex.q12,false,false),
+Q("q13","People say that she devoted most of her life to helping injured people.",[O("a","She is said to have devoted most of her life to helping injured people."),O("b","She said that most injured people had devoted their lives to helping her."),O("c","Most of her life is said to have been saved by injured people."),O("d","She is said to devote herself to helping injured people only later in life.")],"a","reporting-passive",["perfect-infinitive"],p2ex.q13,false,false),
+Q("q14","She began working in the hospital before she completed her medical training.",[O("a","She did not begin working in the hospital until she had completed her medical training."),O("b","By the time she completed her medical training, she had already begun working in the hospital."),O("c","She completed her medical training as soon as she stopped working in the hospital."),O("d","Having completed her medical training, she began working in the hospital for the first time.")],"b","past-perfect-timeline",["restatement"],p2ex.q14,false,false),
+Q("q15","She overcame adversity through determination and support from others.",[O("a","Her determination made other people responsible for solving her difficulties."),O("b","Support from others removed every difficulty before she had to face it."),O("c","Determination and support helped her deal successfully with serious difficulties."),O("d","She avoided difficult situations because other people made the important decisions for her.")],"c","adversity",["restatement"],p2ex.q15,false,false),
+Q("q16","The treatment may have saved many soldiers' lives.",[O("a","The treatment certainly saved the lives of all the soldiers."),O("b","It is unlikely that the treatment had any effect on the soldiers' survival."),O("c","The treatment was required to save every soldier's life."),O("d","It is possible that many soldiers survived because of the treatment.")],"d","modal-perfect",["restatement"],p2ex.q16,false,false),
+Q("q17","The word verify in paragraph 2 is closest in meaning to ______.",[O("a","check for accuracy"),O("b","replace completely"),O("c","record permanently"),O("d","explain publicly")],"a","reading-vocab",["verify"],readEx.q17,false,false),
+Q("q18","The phrase the new technology in paragraph 2 refers to ______.",[O("a","orbital flight"),O("b","launch windows"),O("c","emergency return routes"),O("d","electronic computers")],"d","reading-reference",[],readEx.q18,false,false),
+Q("q19","Why was Johnson’s work especially valuable before John Glenn’s flight?",[O("a","She designed the spacecraft used for the mission."),O("b","She checked calculations produced by computers."),O("c","She trained astronauts to perform manual calculations."),O("d","She developed the first electronic computer used by NASA.")],"b","reading-detail",[],readEx.q19,false,false),
+Q("q20","What can be inferred from the passage?",[O("a","Important contributions may remain unrecognised for many years."),O("b","Johnson received public recognition soon after joining the organisation."),O("c","Technical ability guaranteed equal opportunities for women at the time."),O("d","Johnson preferred manual calculation because she distrusted all computers.")],"a","reading-inference",[],readEx.q20,false,false),
+Q("q21","Which of the following is NOT stated about Johnson’s work and career?",[O("a","She calculated information needed for space missions."),O("b","She was asked to check figures produced by computers."),O("c","She developed the electronic computers later used by NASA."),O("d","She received major public recognition many years after her early work.")],"c","reading-not-stated",[],readEx.q21,false,false),
+Q("q22","Why does the writer mention the Presidential Medal of Freedom?",[O("a","To show that Johnson changed careers later in life."),O("b","To explain why NASA introduced electronic computers."),O("c","To suggest that awards were necessary for mathematical research."),O("d","To illustrate the major public recognition she eventually received.")],"d","reading-purpose",[],readEx.q22,false,false),
+Q("q23","Which of the following best summarises the passage?",[O("a","Johnson became famous mainly because she received a national award."),O("b","Electronic computers eventually made Johnson’s mathematical work unnecessary."),O("c","Johnson’s expertise and persistence contributed to space exploration despite social barriers."),O("d","Johnson’s career focused mainly on improving educational opportunities for women.")],"c","reading-summary",[],readEx.q23,false,false)
+];
+
+const knowledgeCards = [
+{t:"Lexical chunks trọng tâm",b:`<p><b>a personal account of sth</b> = lời kể/tường thuật cá nhân về...</p><p><b>remain committed to V-ing</b> = vẫn tận tâm/cam kết làm gì.</p><p><b>make a significant contribution to sth</b> = có đóng góp đáng kể cho...</p><p><b>offer valuable insights into sth</b> = cung cấp hiểu biết sâu sắc về...</p><p><b>gain recognition</b> = được công nhận.</p>`},
+{t:"Grammar dễ nhầm",b:`<p><b>devote ... to V-ing</b>: <i>to</i> là giới từ.</p><p><b>plural subject + have + V3</b>: <i>achievements have inspired</i>.</p><p><b>which</b> dùng cho vật trong non-defining relative clause.</p><p><b>plural possessive:</b> <i>soldiers' injuries</i>.</p>`},
+{t:"Restatement / Paraphrase",b:`<p><b>have a profound impact on</b> ↔ <b>strongly influence</b>.</p><p><b>overcome adversity</b> ↔ <b>deal successfully with serious difficulties</b>.</p><p><b>People say that S + past...</b> ↔ <b>S is said to have + V3</b>.</p><p><b>may have + V3</b> ↔ <b>It is possible that...</b>.</p>`},
+{t:"Timeline trong quá khứ",b:`<p>Khi một hành động xảy ra trước một hành động quá khứ khác, có thể dùng <b>Past Perfect</b>.</p><p><b>By the time + Past Simple, Past Perfect</b>.</p><p>Bẫy thường gặp: đảo thứ tự hành động hoặc thêm thông tin không có trong câu gốc.</p>`},
+{t:"Reading vocabulary & paraphrase",b:`<p><b>verify the figures</b> ↔ <b>check the calculations for accuracy</b>.</p><p><b>received little public attention</b> ↔ <b>remained largely unrecognised</b>.</p><p><b>recognition came much later</b> ↔ <b>recognition was delayed</b>.</p><p><b>leave a lasting legacy</b> ↔ <b>have a long-term influence</b>.</p>`},
+{t:"Reading strategies",b:`<p><b>Reference:</b> đọc cụm trước/sau và kiểm tra nghĩa + logic.</p><p><b>Inference:</b> chỉ suy ra điều passage có evidence hỗ trợ; không dựa vào “kiến thức đời sống”.</p><p><b>NOT stated:</b> kiểm tra từng option.</p><p><b>Writer's purpose:</b> xác định chức năng của ví dụ/chi tiết.</p><p><b>Best summary:</b> chọn ý bao quát toàn bài, tránh quá hẹp hoặc sai trọng tâm.</p>`}
+];
+
+const reinforcementPool = [
+Q("c1","The scientist made an important ______ to medical research.",[O("a","access"),O("b","contribution"),O("c","permission"),O("d","occasion")],"b","contribution-to",[],"",true,true),
+Q("c2","Even after several failures, he remained committed ______ improving the project.",[O("a","to"),O("b","for"),O("c","with"),O("d","at")],"a","committed-to",[],"",true,true),
+F("c3","Complete: The biography provides valuable insights ______ the challenges she faced.",["into"],"insights-into","offer/provide insights into + N"),
+F("c4","Complete: The young nurse devoted much of her time ______ patients in remote areas.",["to helping"],"devote-to","devote + time/life/oneself + to + V-ing"),
+Q("c5","The new method had a profound ______ on the way doctors treated the disease.",[O("a","attendance"),O("b","account"),O("c","impact"),O("d","direction")],"c","restatement-impact",[],"",true,true),
+Q("c6","People believe that he made an important contribution to the project.",[O("a","He is believed to have made an important contribution to the project."),O("b","He believed that other people had completed the whole project."),O("c","The project is believed to have prevented him from contributing."),O("d","He is believed to make a contribution only in the future.")],"a","reporting-passive",[],"",true,false),
+Q("c7","She began volunteering before she graduated from university.",[O("a","She did not volunteer until after graduation."),O("b","By the time she graduated, she had already begun volunteering."),O("c","She stopped volunteering as soon as she graduated."),O("d","Having graduated, she volunteered for the first time.")],"b","past-perfect-timeline",[],"",true,false),
+Q("c8","The medicine may have prevented further complications.",[O("a","The medicine certainly prevented every complication."),O("b","It is possible that the medicine stopped additional complications from developing."),O("c","The medicine was required to prevent all future illnesses."),O("d","It is unlikely that the medicine affected the patient's condition.")],"b","modal-perfect",[],"",true,false),
+Q("c9","The research centre, who opened in 2010, now serves thousands of patients. Which change is needed?",[O("a","who → which"),O("b","opened → opening"),O("c","serves → serve"),O("d","patients → patient")],"a","relative-clause",[],"",true,true),
+Q("c10","Nam and Minh completed the project together, but the teacher asked him to revise their conclusion. Which change is needed?",[O("a","him → them"),O("b","completed → completes"),O("c","their → his"),O("d","to revise → revising")],"a","pronoun-reference",[],"",true,true),
+Q("c11","The report described several doctor's experiences during the emergency. Which change is needed?",[O("a","doctor's → doctors'"),O("b","described → describes"),O("c","several → much"),O("d","during → while")],"a","plural-possessive",[],"",true,true),
+F("c12","Complete the expression: verify the ______.",["figures"],"reading-vocab","verify the figures = kiểm tra/xác minh số liệu"),
+Q("c13","A researcher’s work was ignored for years but later received a major national award. What is the best inference?",[O("a","Important work may be recognised only after a delay."),O("b","Awards always prove that research is correct."),O("c","Ignored work can never become useful."),O("d","Every researcher eventually receives an award.")],"a","reading-inference",[],"",true,true),
+Q("c14","“The device was checked carefully before use.” Which phrase best paraphrases checked carefully in a data context?",[O("a","verified for accuracy"),O("b","replaced completely"),O("c","announced publicly"),O("d","stored permanently")],"a","reading-vocab",[],"",true,true),
+Q("c15","A passage says: “Her work received little attention for decades. Later, she received a national honour.” Why is the honour mentioned?",[O("a","To illustrate the recognition she eventually received"),O("b","To prove all national honours are deserved"),O("c","To explain why she changed professions"),O("d","To show that her early work was unimportant")],"a","reading-purpose",[],"",true,true),
+Q("c16","Which sentence best expresses “leave a lasting legacy”?",[O("a","Her influence continued long after her career ended."),O("b","She kept a diary for one year."),O("c","She changed jobs several times."),O("d","Her work attracted attention for only a week.")],"a","legacy",[],"",true,true),
+F("c17","Complete: technical ______.",["accuracy"],"reading-vocab","technical accuracy = độ chính xác về kỹ thuật"),
+F("c18","Complete: social ______.",["barriers"],"social-barriers","social barriers = các rào cản xã hội")
+];
+
+function fy(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function normalize(s){
+  return String(s).trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g," ");
+}
+function makeState(items, section){
+  items.forEach(q=>{ if(!sectionState[section][q.id]) sectionState[section][q.id]={answered:false,selectedOptionId:null,isCorrect:false,attempt:0}; });
+}
+function statFor(section,items){
+  makeState(items,section);
+  let answered=0,correct=0;
+  items.forEach(q=>{const s=sectionState[section][q.id]; if(s.answered){answered++; if(s.isCorrect)correct++;}});
+  return {answered,correct,wrong:answered-correct,total:items.length,pct:items.length?Math.round(correct/items.length*100):0};
+}
+function progressHTML(st){
+  const donePct=st.total?Math.round(st.answered/st.total*100):0;
+  return `<div class="stats">
+    <div class="stat"><span>Đã làm</span><b>${st.answered}/${st.total}</b></div>
+    <div class="stat"><span>Đúng</span><b>${st.correct}</b></div>
+    <div class="stat"><span>Sai</span><b>${st.wrong}</b></div>
+    <div class="stat"><span>Điểm</span><b>${st.correct}/${st.total}</b></div>
+    <div class="stat"><span>Tỷ lệ</span><b>${st.pct}%</b></div>
+  </div><div class="bar"><span style="width:${donePct}%"></span></div>`;
+}
+function updateAllProgress(){
+  document.getElementById("prog1").innerHTML=progressHTML(statFor("p1",part1));
+  document.getElementById("prog2").innerHTML=progressHTML(statFor("p2",part2));
+  document.getElementById("prog3").innerHTML=progressHTML(statFor("p3",part3Items));
+  updateSummary();
+}
+function optionLetter(order,optId){ return String.fromCharCode(65+order.findIndex(x=>x.id===optId)); }
+
+function renderQuestion(q, section, displayNumber){
+  const st=sectionState[section][q.id] || (sectionState[section][q.id]={answered:false,selectedOptionId:null,isCorrect:false,attempt:0});
+  const card=document.createElement("div"); card.className="card"+(st.answered?" locked":""); card.dataset.qid=q.id;
+  const n=document.createElement("div"); n.className="qnum"; n.textContent=`Câu ${displayNumber}`;
+  const p=document.createElement("div"); p.className="qprompt"; p.textContent=q.prompt;
+  card.append(n,p);
+  if(q.type==="mcq"){
+    let order=q._displayOptions || (q._displayOptions=q.optionShuffleSafe?fy(q.options):q.options.slice());
+    const box=document.createElement("div"); box.className="options";
+    order.forEach((opt,idx)=>{
+      const b=document.createElement("button"); b.className="option"; b.type="button"; b.disabled=st.answered;
+      b.textContent=`${String.fromCharCode(65+idx)}. ${opt.text}`;
+      if(st.answered){
+        if(opt.id===q.correctId) b.classList.add("correct");
+        if(opt.id===st.selectedOptionId && !st.isCorrect) b.classList.add("wrong");
+      }
+      b.addEventListener("click",()=>answerMCQ(q,section,opt.id,card));
+      box.appendChild(b);
+    });
+    card.appendChild(box);
+  }else{
+    const row=document.createElement("div"); row.className="fillrow";
+    const inp=document.createElement("input"); inp.type="text"; inp.placeholder="Nhập đáp án"; inp.disabled=st.answered; inp.value=st.selectedOptionId||"";
+    const b=document.createElement("button"); b.className="btn"; b.textContent="KIỂM TRA"; b.disabled=st.answered;
+    b.addEventListener("click",()=>answerFill(q,section,inp.value,card));
+    inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!st.answered) b.click();});
+    row.append(inp,b); card.appendChild(row);
+  }
+
+  if(st.answered) card.appendChild(buildFeedback(q,section));
+  return card;
+}
+function buildFeedback(q,section){
+  const st=sectionState[section][q.id];
+  const f=document.createElement("div"); f.className="feedback "+(st.isCorrect?"ok":"bad");
+  if(section==="p1"){
+    if(q.type==="mcq"){
+      const order=q._displayOptions; const c=q.options.find(o=>o.id===q.correctId);
+      f.innerHTML=st.isCorrect?`<b>✓ Chính xác.</b>`:`<b>✗ Chưa chính xác.</b> Đáp án đúng: <b>${optionLetter(order,q.correctId)}. ${escapeHTML(c.text)}</b>`;
+    } else {
+      f.innerHTML=st.isCorrect?`<b>✓ Chính xác.</b>`:`<b>✗ Chưa chính xác.</b> Đáp án đúng: <b>${escapeHTML(q.acceptedAnswers[0])}</b>`;
+    }
+  } else if(section==="p2"){
+    const order=q._displayOptions; const chosen=q.options.find(o=>o.id===st.selectedOptionId); const correct=q.options.find(o=>o.id===q.correctId);
+    f.innerHTML=`<p><b>Bạn chọn:</b> ${optionLetter(order,st.selectedOptionId)}. ${escapeHTML(chosen.text)}</p>
+      <p><b>Đáp án đúng:</b> ${optionLetter(order,q.correctId)}. ${escapeHTML(correct.text)}</p>
+      <p><b>${st.isCorrect?"✓ Chính xác":"✗ Chưa chính xác"}</b></p>${q.explanation}`;
+  } else {
+    let correctText=q.type==="mcq"?q.options.find(o=>o.id===q.correctId).text:q.acceptedAnswers[0];
+    let reminder=q.reminder || reminderByConcept(q.primaryConcept);
+    f.innerHTML=st.isCorrect?`<b>✓ Chính xác.</b>${reminder?` <span>Ghi nhớ: ${escapeHTML(reminder)}</span>`:""}`
+      :`<b>✗ Chưa chính xác.</b> Đáp án đúng: <b>${escapeHTML(correctText)}</b>.${reminder?` Ghi nhớ: ${escapeHTML(reminder)}`:""}`;
+  }
+  f.setAttribute("aria-live","polite");
+  return f;
+}
+function reminderByConcept(c){
+  const m={
+    "contribution-to":"make a contribution to + N",
+    "committed-to":"be/remain committed to + N/V-ing",
+    "devote-to":"devote ... to + N/V-ing",
+    "insights-into":"offer/provide insights into + N",
+    "restatement-impact":"have a profound impact on = strongly influence",
+    "reporting-passive":"be said/believed to have + V3",
+    "past-perfect-timeline":"By the time + Past Simple, Past Perfect",
+    "modal-perfect":"may have + V3 = có thể đã...",
+    "relative-clause":"which dùng cho vật; who dùng cho người",
+    "pronoun-reference":"đại từ phải khớp số/người với antecedent",
+    "plural-possessive":"plural noun ending -s → add apostrophe: soldiers'",
+    "reading-inference":"chỉ suy luận điều evidence hỗ trợ",
+    "reading-purpose":"xác định chức năng của chi tiết trong lập luận",
+    "reading-vocab":"xác định nghĩa theo context"
+  }; return m[c]||"";
+}
+function answerMCQ(q,section,optId,card){
+  const st=sectionState[section][q.id]; if(st.answered)return;
+  st.answered=true; st.selectedOptionId=optId; st.isCorrect=optId===q.correctId; st.attempt=1;
+  rerenderCard(q,section,card); updateAllProgress();
+}
+function answerFill(q,section,value,card){
+  const st=sectionState[section][q.id]; if(st.answered)return;
+  const v=normalize(value); st.answered=true; st.selectedOptionId=value; st.isCorrect=q.acceptedAnswers.map(normalize).includes(v); st.attempt=1;
+  rerenderCard(q,section,card); updateAllProgress();
+}
+function rerenderCard(q,section,oldCard){
+  let items=section==="p1"?currentP1:section==="p2"?part2:part3Items;
+  const idx=items.findIndex(x=>x.id===q.id);
+  oldCard.replaceWith(renderQuestion(q,section,idx+1));
+}
+let currentP1=[];
+function renderPart1(){
+  currentP1=fy(part1);
+  currentP1.forEach(q=>{q._displayOptions=q.optionShuffleSafe?fy(q.options):q.options.slice();});
+  const root=document.getElementById("part1"); root.innerHTML="";
+  currentP1.forEach((q,i)=>root.appendChild(renderQuestion(q,"p1",i+1)));
+}
+function renderPart2(){
+  part2.forEach(q=>{q._displayOptions=q.optionShuffleSafe?fy(q.options):q.options.slice();});
+  const root=document.getElementById("part2"); root.innerHTML="";
+  const nonReading=part2.slice(0,16), reading=part2.slice(16);
+  nonReading.forEach((q,i)=>root.appendChild(renderQuestion(q,"p2",i+1)));
+  const wrap=document.createElement("div"); wrap.className="reading-layout";
+  const pass=document.createElement("div"); pass.className="passage"; pass.innerHTML="<h3>READING PASSAGE</h3>"+readingPassage.map(x=>`<p>${x}</p>`).join("");
+  const qs=document.createElement("div"); reading.forEach((q,j)=>qs.appendChild(renderQuestion(q,"p2",17+j)));
+  wrap.append(pass,qs); root.appendChild(wrap);
+}
+function renderKnowledge(){
+  document.getElementById("knowledgeGrid").innerHTML=knowledgeCards.map(k=>`<div class="kcard"><h3>${k.t}</h3>${k.b}</div>`).join("");
+}
+function errorConceptCounts(){
+  const c={}; part2.forEach(q=>{const s=sectionState.p2[q.id]; if(s&&s.answered&&!s.isCorrect)c[q.primaryConcept]=(c[q.primaryConcept]||0)+1;}); return c;
+}
+function buildPart3(){
+  const counts=errorConceptCounts();
+  const ranked=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
+  const coreIds=["c1","c2","c4","c6","c8","c13"];
+  const selected=reinforcementPool.filter(q=>coreIds.includes(q.id));
+  const used=new Set(selected.map(q=>q.id));
+  for(const concept of ranked){
+    for(const q of reinforcementPool){
+      if(!used.has(q.id)&&q.primaryConcept===concept){selected.push(q);used.add(q.id);if(selected.length>=12)break;}
+    }
+    if(selected.length>=12)break;
+  }
+  for(const q of fy(reinforcementPool)){
+    if(selected.length>=12)break;
+    if(!used.has(q.id)){selected.push(q);used.add(q.id);}
+  }
+  part3Items=fy(selected);
+  part3Items.forEach(q=>{ if(q.type==="mcq") q._displayOptions=q.optionShuffleSafe?fy(q.options):q.options.slice(); });
+  makeState(part3Items,"p3");
+  const note=document.getElementById("remediationNote");
+  if(ranked.length){
+    note.innerHTML=`<b>Targeted remediation:</b> Hệ thống đang ưu tiên các nhóm em vừa làm sai ở Phần 2: ${ranked.slice(0,5).map(escapeHTML).join(", ")}.`;
+  }else{
+    note.innerHTML=`<b>Core consolidation:</b> Em chưa có lỗi sai ở Phần 2, vì vậy hệ thống dùng bộ củng cố cân bằng các kiến thức trọng tâm.`;
+  }
+  renderPart3();
+}
+function renderPart3(){
+  const root=document.getElementById("part3"); root.innerHTML="";
+  part3Items.forEach((q,i)=>root.appendChild(renderQuestion(q,"p3",i+1)));
+}
+function openPart3(){
+  if(!part3Items.length) buildPart3();
+  showView("p3");
+  updateAllProgress();
+}
+function resetSection(section){
+  let items=section==="p1"?part1:section==="p2"?part2:part3Items;
+  items.forEach(q=>{sectionState[section][q.id]={answered:false,selectedOptionId:null,isCorrect:false,attempt:0}; if(q.type==="mcq")q._displayOptions=q.optionShuffleSafe?fy(q.options):q.options.slice();});
+  if(section==="p1") renderPart1();
+  else if(section==="p2"){renderPart2();}
+  else {part3Items=fy(part3Items); renderPart3();}
+  updateAllProgress();
+}
+function resetAll(){
+  if(!confirm("Bạn có chắc muốn làm lại toàn bộ bài?"))return;
+  sectionState.p1={};sectionState.p2={};sectionState.p3={};part3Items=[];
+  renderPart1();renderPart2();updateAllProgress();showView("homeView");
+}
+function updateSummary(){
+  const s1=statFor("p1",part1),s2=statFor("p2",part2),s3=statFor("p3",part3Items);
+  const totalCorrect=s1.correct+s2.correct+s3.correct,totalQuestions=s1.total+s2.total+s3.total;
+  const totalPct=totalQuestions?Math.round(totalCorrect/totalQuestions*100):0;
+  document.getElementById("summary").innerHTML=`
+    <div class="sumcard">PHẦN 1<b>${s1.correct}/${s1.total}</b><span>${s1.pct}%</span></div>
+    <div class="sumcard">PHẦN 2<b>${s2.correct}/${s2.total}</b><span>${s2.pct}%</span></div>
+    <div class="sumcard">PHẦN 3<b>${s3.correct}/${s3.total}</b><span>${s3.pct}%</span></div>
+    <div class="sumcard">TỔNG<b>${totalCorrect}/${totalQuestions}</b><span>${totalPct}%</span></div>`;
+}
+function setStep(id){
+  document.querySelectorAll(".step").forEach(s=>s.classList.toggle("active",s.dataset.step===id));
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+function showView(id){
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  const target=document.getElementById(id);
+  if(target) target.classList.add("active");
+  if(id==="p1"||id==="p2"||id==="p3"||id==="sum") setStep(id);
+  else document.querySelectorAll(".step").forEach(s=>s.classList.remove("active"));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+document.getElementById("openBtn").addEventListener("click",()=>{
+  const v=document.getElementById("pw").value;
+  if(v==="msPhuongcute"){
+    document.getElementById("gate").classList.add("hidden");document.getElementById("app").classList.remove("hidden");
+    renderKnowledge();renderPart1();renderPart2();updateAllProgress();showView("homeView");
+  }else{
+    document.getElementById("gateMsg").textContent="❌ Mật khẩu chưa đúng. Vui lòng thử lại.";
+    document.getElementById("gateMsg").style.color="#b42318";
+  }
+});
+document.getElementById("pw").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("openBtn").click();});
+</script>
+</body>
+</html>
