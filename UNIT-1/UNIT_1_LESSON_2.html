@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Unit 1 Lesson 2 • Language • Interactive Review</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--line:#dbe3ef;--accent:#2158d5;--accent2:#0f766e;--ok:#157347;--bad:#b42318;--warn:#92400e;--shadow:0 8px 24px rgba(15,23,42,.08)}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+button,input{font:inherit} button{cursor:pointer}.hidden{display:none!important}
+.shell{max-width:1080px;margin:auto;padding:20px}.view{display:none}.view.active{display:block}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}.brand{font-weight:800}.pill{font-size:.86rem;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted)}
+.hero,.panel,.qcard,.kcard{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.hero{padding:28px}.hero h1{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.35rem)}.hero p{color:var(--muted)}
+.login{max-width:520px;margin:8vh auto}.field{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:12px;margin:10px 0 12px}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:700;min-height:46px}.btn.primary{background:var(--accent);color:#fff}.btn.secondary{background:#eaf0ff;color:#143a8b}.btn.green{background:var(--accent2);color:#fff}.btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn.danger{background:#fff0ee;color:#9d1c12;border:1px solid #f2c6c1}
+.home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.home-card{padding:22px;background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.home-card h2{margin-top:0}.home-card p{color:var(--muted);min-height:72px}.mini-progress{font-size:.88rem;color:var(--muted);margin:10px 0}.actions{display:flex;gap:10px;flex-wrap:wrap}.section-head{margin-bottom:16px}.section-head h1{margin:0 0 6px}.section-head p{margin:0;color:var(--muted)}
+.progress-wrap{position:sticky;top:0;z-index:10;background:rgba(245,247,251,.95);backdrop-filter:blur(6px);padding:10px 0 12px}.progress-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px}.progress-row{display:flex;gap:12px;flex-wrap:wrap;font-size:.9rem}.bar{height:9px;background:#edf1f7;border-radius:999px;overflow:hidden;margin-top:8px}.bar>div{height:100%;background:var(--accent);width:0}
+.qcard{padding:18px;margin:14px 0}.qnum{font-size:.82rem;font-weight:800;color:var(--accent);letter-spacing:.02em}.prompt{font-weight:700;margin:7px 0 12px}.opts{display:grid;gap:8px}.opt{width:100%;text-align:left;padding:11px 12px;background:#fff;border:1px solid var(--line);border-radius:11px}.opt:hover:not(:disabled){border-color:#9fb5f0;background:#f8faff}.opt:disabled{cursor:default}.opt.selected{outline:2px solid #7d9cec}.opt.correct{border-color:#74c69d;background:#effaf4}.opt.wrong{border-color:#ef9b92;background:#fff4f2}.fillrow{display:flex;gap:8px;align-items:center}.fillrow input{flex:1;padding:11px 12px;border:1px solid var(--line);border-radius:10px}.feedback{margin-top:12px;padding:13px 14px;border-radius:12px;border-left:4px solid var(--accent);background:#f8fafc}.feedback.ok{border-left-color:var(--ok)}.feedback.bad{border-left-color:var(--bad)}.feedback h4{margin:0 0 6px}.feedback p{margin:6px 0}.feedback ul{margin:6px 0 0 18px}.muted{color:var(--muted)}
+.knowledge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:14px 0 22px}.kcard{padding:16px}.kcard h3{margin:0 0 8px;color:#183b8f}.kcard table{width:100%;border-collapse:collapse;font-size:.93rem}.kcard td{padding:6px;border-top:1px solid var(--line);vertical-align:top}.tagline{font-size:.88rem;color:var(--muted)}
+.reading-group{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:start}.reading-passage,.reading-questions{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;max-height:72vh;overflow:auto}.reading-passage{position:sticky;top:92px}
+.notice{padding:12px 14px;border-radius:12px;background:#fff9e9;border:1px solid #f3deb2;color:#7a4a00}.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 40px}.audit{font-size:.88rem;color:var(--muted);padding:12px 0}
+@media(max-width:760px){.shell{padding:12px}.home-grid,.knowledge-grid{grid-template-columns:1fr}.home-card p{min-height:auto}.hero{padding:20px}.progress-wrap{top:0}.reading-group{display:flex;flex-direction:column;gap:10px}.reading-passage,.reading-questions{width:100%;max-height:38vh;overflow-y:auto;-webkit-overflow-scrolling:touch;position:static}.reading-passage{order:1}.reading-questions{order:2}.fillrow{align-items:stretch;flex-direction:column}.btn{width:100%}.actions .btn,.footer-actions .btn{flex:1 1 140px;width:auto}.qcard{padding:15px}.opt{min-height:48px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <section id="loginView" class="view active login">
+    <div class="hero">
+      <div class="pill">ENGLISH 12 • GLOBAL SUCCESS 12 + V-ACT</div>
+      <h1>BÀI ÔN TẬP VÀ LUYỆN TẬP</h1>
+      <p><b>Unit 1 • Life Stories We Admire • Lesson 2 • Language</b></p>
+      <label for="pw">Nhập mật khẩu</label>
+      <input id="pw" class="field" type="password" autocomplete="off" />
+      <button id="openBtn" class="btn primary">MỞ BÀI</button>
+      <div id="pwMsg" aria-live="polite" style="margin-top:10px;color:var(--bad)"></div>
+    </div>
+  </section>
+
+  <section id="homeView" class="view">
+    <div class="topbar"><div class="brand">UNIT 1 • LESSON 2 • LANGUAGE</div><span class="pill">Học tự do theo phần</span></div>
+    <div class="hero" style="margin-bottom:16px"><h1>Trang chính</h1><p>Chọn phần em cần học. Mỗi phần là một màn hình riêng; quay lại trang chính không làm mất kết quả.</p></div>
+    <div class="home-grid">
+      <article class="home-card"><h2>PHẦN 1 • ÔN BÀI CŨ</h2><p>40 câu retrieval practice về meaning, chunks, word family, paraphrase và contextual use.</p><div id="homeP1" class="mini-progress"></div><button class="btn primary" data-go="p1View">VÀO HỌC</button></article>
+      <article class="home-card"><h2>PHẦN 2 • LUYỆN TẬP</h2><p>14 câu ĐGNL. Chấm ngay từng câu và xem giải thích chi tiết sau khi trả lời.</p><div id="homeP2" class="mini-progress"></div><button class="btn primary" data-go="p2View">VÀO HỌC</button></article>
+      <article class="home-card"><h2>PHẦN 3 • CỦNG CỐ</h2><p>Knowledge Summary mở rộng + bài tập near-transfer; ưu tiên lỗi Phần 2 nếu đã có dữ liệu.</p><div id="homeP3" class="mini-progress"></div><button class="btn green" data-go="p3View">VÀO HỌC</button></article>
+    </div>
+  </section>
+
+  <section id="p1View" class="view">
+    <div class="section-head"><h1>PHẦN 1 • ÔN BÀI CŨ</h1><p>Review & Retrieval Practice • 40 câu</p></div>
+    <div class="progress-wrap"><div id="p1Progress" class="progress-card"></div></div>
+    <div id="p1List"></div>
+    <div class="footer-actions"><button class="btn danger" data-reset="p1">LÀM LẠI</button><button class="btn ghost" data-go="homeView">TRỞ LẠI</button></div>
+  </section>
+
+  <section id="p2View" class="view">
+    <div class="section-head"><h1>PHẦN 2 • LUYỆN TẬP</h1><p>ĐGNL Language in Context • Error Identification • Best Restatement</p></div>
+    <div class="progress-wrap"><div id="p2Progress" class="progress-card"></div></div>
+    <div id="p2List"></div>
+    <div class="footer-actions"><button class="btn danger" data-reset="p2">LÀM LẠI</button><button class="btn green" data-go="p3View">CỦNG CỐ</button><button class="btn ghost" data-go="homeView">TRỞ LẠI</button></div>
+  </section>
+
+  <section id="p3View" class="view">
+    <div class="section-head"><h1>PHẦN 3 • CỦNG CỐ CHI TIẾT</h1><p>Kiến thức bắt buộc phải nhớ → lỗi dễ nhầm → paraphrase → vận dụng mới.</p></div>
+    <div id="remediationNote" class="notice"></div>
+    <div id="knowledgeTop" class="knowledge-grid"></div>
+    <div class="progress-wrap"><div id="p3Progress" class="progress-card"></div></div>
+    <div id="p3List"></div>
+    <div class="footer-actions"><button class="btn danger" data-reset="p3">LÀM LẠI</button><button id="reviewKnowledge" class="btn secondary">XEM LẠI KIẾN THỨC</button><button class="btn ghost" data-go="homeView">TRỞ LẠI</button></div>
+  </section>
+</div>
+<script>
+const PASSWORD='msPhuongcute';
+const state={p1:{},p2:{},p3:{},p3Built:false};
+const p1Data=[
+['attend school / college means ______.',['bỏ học / bỏ đại học','đi học / theo học','tốt nghiệp đại học','bắt đầu sự nghiệp'],1,'attend-school'],
+['have a difficult childhood means ______.',['có tuổi thơ khó khăn','có sự nghiệp khó khăn','có cuộc hôn nhân lâu dài','có thành tựu ấn tượng'],0,'difficult-childhood'],
+['be admired for means ______.',['được trao giải vì','được nghiên cứu vì','được ngưỡng mộ vì','được tuyển dụng vì'],2,'admired-for'],
+['an impressive achievement means ______.',['một nghiên cứu quan trọng','một phát hiện tình cờ','một sự nghiệp lâu dài','một thành tựu ấn tượng'],3,'achievement'],
+['pursue a career in means ______.',['theo đuổi sự nghiệp trong','kết thúc sự nghiệp trong','nghiên cứu một nghề nghiệp','gia nhập một tổ chức'],0,'career'],
+['conduct research into/on means ______.',['đạt thành công trong','tiến hành nghiên cứu về','tạo bước đột phá trong','nhận giải thưởng vì'],1,'conduct-research'],
+['eventually become means ______.',['đang trở thành','sớm trở thành','cuối cùng trở thành','từng trở thành'],2,'eventually'],
+['make a major breakthrough means ______.',['có tuổi thơ khó khăn','gia nhập tổ chức lớn','có cuộc hôn nhân hạnh phúc','tạo bước đột phá lớn'],3,'breakthrough'],
+['She graduated ______ university in 2005.',['from','at','on','for'],0,'graduate-from'],
+['After graduation, she began a career ______ medicine.',['on','in','with','at'],1,'career'],
+['The scientist was widely admired ______ her determination.',['at','with','for','on'],2,'admired-for'],
+['She received an award ______ her contribution to medical research.',['on','from','with','for'],3,'award-for'],
+['The team ______ research into a rare disease.',['conducted','achieved','received','attended'],0,'conduct-research'],
+['The researcher made an important ______ while analysing the data.',['success','discovery','admiration','research'],1,'discovery'],
+['She achieved success ______ a highly competitive field.',['at','on','in','from'],2,'success-in'],
+['At an early ______, she showed an unusual talent for science.',['period','career','time','age'],3,'early-age'],
+['He ______ as a doctor before becoming a university lecturer.',['worked','made','joined','achieved'],0,'work-as'],
+['During her ______, she received several awards for her work.',['childhood','career','discovery','organisation'],1,'during-career'],
+['Winning the prize was an impressive ______.',['achieve','achievable','achievement','achieving'],2,'achievement'],
+['Her courage earned the ______ of people around the country.',['admire','admired','admirable','admiration'],3,'admiration'],
+['The medical ______ conducted research into the disease.',['researcher','research','researched','researching'],0,'word-family'],
+['The team made an important scientific ______.',['discover','discovery','discovered','discovering'],1,'discovery'],
+['Her scientific work was an ______ achievement.',['impress','impression','impressive','impressively'],2,'word-family'],
+['After years of work, she finally achieved ______ in her field.',['succeed','successful','successfully','success'],3,'success-in'],
+['“She was widely admired for her courage” is closest in meaning to ______.',['Many people respected her because of her courage.','She admired many courageous people.','Her courage prevented people from respecting her.','Few people knew about her courage.'],0,'admired-for'],
+['“He made an important discovery” is closest in meaning to ______.',['He began an important career.','He discovered something important.','He received an important award.','He joined an important organisation.'],1,'discovery'],
+['Although she had a difficult ______, she later became a successful scientist.',['career','award','childhood','research'],2,'difficult-childhood'],
+['The scientist is currently working ______ a project on renewable energy.',['in','at','for','on'],3,'work-on'],
+['After university, he decided to ______ a career in engineering.',['pursue','receive','attend','conduct'],0,'career'],
+['The couple had a long and happy ______ lasting more than fifty years.',['achievement','marriage','discovery','career'],1,'marriage'],
+['Her new method helped the research team make a major ______.',['organisation','childhood','breakthrough','admiration'],2,'breakthrough'],
+['She later ______ an international research organisation.',['achieved','conducted','graduated','joined'],3,'join-org'],
+['Which sentence uses the target collocation correctly?',['She conducted research into childhood development.','She made research into childhood development.','She achieved research into childhood development.','She attended research into childhood development.'],0,'conduct-research'],
+['He ______ from university and began a career in medicine.',['attended','graduated','pursued','achieved'],1,'graduate-from'],
+['Her most ______ achievement was the development of a low-cost medical device.',['impress','impression','impressive','impressively'],2,'word-family'],
+['After many years of research, she ______ became head of the institute.',['during','early','widely','eventually'],3,'eventually'],
+['achieve success in means ______.',['đạt thành công trong','tạo phát hiện trong','nghiên cứu thành công','nhận giải thưởng trong'],0,'success-in'],
+['The young scientist received an ______ for her medical research.',['achievement','award','admiration','organisation'],1,'award-for'],
+['The discovery was one of the most ______ achievements of her career.',['impression','impressively','impressive','impress'],2,'achievement'],
+['The scientist ______ a major breakthrough after years of research.',['did','conducted','achieved','made'],3,'breakthrough']
+].map((x,i)=>({id:'p1_'+(i+1),section:'p1',type:'mcq',prompt:x[0],options:x[1].map((t,j)=>({id:'o'+j,text:t})),correctOptionId:'o'+x[2],primaryConcept:x[3]}));
+
+const p2Raw=[
+{p:'While the young doctor ______ at a field hospital, she kept detailed notes about her experiences.',o:['worked','was working','has worked','had worked'],c:1,k:'past-continuous',e:'Hành động “work at a field hospital” tạo bối cảnh đang diễn ra trong quá khứ, còn “kept detailed notes” là hành động xảy ra trong giai đoạn đó. Vì vậy dùng Past Continuous: was working.',d:['worked: Past Simple có thể tả giai đoạn đã kết thúc, nhưng không nhấn mạnh background đang diễn ra.','has worked: Present Perfect không hợp với bối cảnh quá khứ đã xác định.','had worked: Past Perfect cần một mốc quá khứ sau nó để tạo quan hệ trước–sau.']},
+{p:'The researcher made an important ______ while analysing the results.',o:['discovery','discover','discovered','discovering'],c:0,k:'discovery',e:'Sau “an important” cần danh từ. Collocation cần nhớ: make an important discovery = có một phát hiện quan trọng.',d:['discover: động từ nguyên mẫu.','discovered: V2/V3, không đứng sau “an important”.','discovering: V-ing, không tạo cụm “make a discovering”.']},
+{p:'The scientist was widely admired ______ her determination.',o:['with','about','for','by'],c:2,k:'admired-for',e:'Cấu trúc: admire somebody for something / be admired for something. “her determination” là lý do được ngưỡng mộ.',d:['with: không có cấu trúc be admired with sth.','about: không dùng admired about.','by: dùng để chỉ tác nhân, ví dụ admired by many people; ở đây determination là lý do.']},
+{p:'Only ______ of the young doctors had previous experience of working in field hospitals.',o:['much','little','a few','a little'],c:2,k:'quantifiers',e:'“young doctors” là danh từ đếm được số nhiều → a few + plural countable noun.',d:['much: dùng với danh từ không đếm được.','little: dùng với danh từ không đếm được và mang nghĩa gần như không có.','a little: dùng với danh từ không đếm được.']},
+{p:'Working at the field hospital was far ______ than she had expected.',o:['challenging','more challenging','most challenging','as challenging'],c:1,k:'comparative',e:'Có “than” → so sánh hơn. “challenging” là tính từ dài → more challenging. “far” nhấn mạnh mức độ: far more challenging than.',d:['challenging: thiếu dạng so sánh.','most challenging: là so sánh nhất.','as challenging: phải đi với as ... as, không đi với than.']},
+{p:'While the doctor was treating a patient, the lights suddenly were going out, forcing the staff to use emergency equipment in the room. Which underlined part needs correction?',o:['was treating','to use','in the room','were going out'],c:3,k:'past-event',e:'“was treating” là background; “the lights suddenly went out” là sự kiện ngắn xen vào → Past Simple. Sửa were going out → went out.',d:['was treating: đúng Past Continuous cho hành động nền.','to use: đúng trong force somebody to do something.','in the room: cụm giới từ đúng.']},
+{p:'The researcher was analysing the data when she was noticing an unusual pattern in the final results that evening. Which part needs correction?',o:['was analysing','in the final results','was noticing','that evening'],c:2,k:'past-event',e:'Trong quá trình đang phân tích, cô “noticed” một pattern bất thường như một sự kiện tại một thời điểm. Sửa was noticing → noticed.',d:['was analysing: đúng background.','in the final results: đúng.','that evening: đúng mốc thời gian quá khứ.']},
+{p:'One of the scientist’s greatest achievement was developing a method that allowed doctors to identify the disease more quickly. Which part needs correction?',o:['allowed','to identify','more quickly','achievement'],c:3,k:'one-of-plural',e:'Cấu trúc: one of + ... + plural noun. Sửa achievement → achievements. Chủ ngữ trung tâm vẫn là One nên “was” đúng.',d:['allowed: đúng.','to identify: đúng sau allow somebody to do something.','more quickly: đúng dạng so sánh hơn của trạng từ.']},
+{p:'The young researcher joined a team of scientists who was studying a rare disease, and she later became a respected expert in the field. Which part needs correction?',o:['who was studying','joined','in the field','became'],c:0,k:'agreement',e:'“who” thay cho “scientists” số nhiều → who were studying. Sửa was → were.',d:['joined: đúng Past Simple.','in the field: đúng.','became: đúng trong chuỗi sự kiện.']},
+{p:'Marie Curie was a scientist whose research had a profound impact on modern science, and many people still admire her for it achievements. Which part needs correction?',o:['it achievements','whose research','still admire her','on modern science'],c:0,k:'possession',e:'Trước danh từ “achievements” cần tính từ sở hữu. Chủ thể là Marie Curie → her achievements, không phải it achievements.',d:['whose research: đúng cấu trúc sở hữu.','still admire her: đúng.','on modern science: đúng trong have an impact on.']},
+{p:'The researcher did not realise that the data contained an error until she examined the results more carefully.',o:['Only after examining the results more carefully did the researcher realise that the data contained an error.','The researcher examined the results carefully because she had already corrected the error.','Before examining the results carefully, the researcher knew exactly where the error was.','The error prevented the researcher from examining the results more carefully.'],c:0,k:'only-after',e:'Paraphrase chuẩn: not ... until ↔ Only after + N/V-ing + auxiliary + S + V. Giữ nguyên trình tự: examine carefully → realise error.',d:['B thêm thông tin “had already corrected the error”.','C đảo ngược timeline: biết trước khi kiểm tra.','D thêm quan hệ nguyên nhân không có trong câu gốc.']},
+{p:'She was widely admired for her determination throughout her medical career.',o:['Her determination earned her widespread admiration during her medical career.','She admired many determined people while working in medicine.','Her career became successful because she admired determined people.','People admired her only after her career had ended.'],c:0,k:'admired-for',e:'be widely admired for ↔ earn widespread admiration. Phương án A giữ đúng lý do, kết quả và thời gian “throughout/during her medical career”.',d:['B đảo chủ thể–đối tượng.','C thêm quan hệ nguyên nhân mới.','D đổi mốc thời gian thành sau khi sự nghiệp kết thúc.']},
+{p:'Her colleagues provided her with the support she needed to continue the research.',o:['She continued the research without receiving any support from her colleagues.','Her colleagues prevented her from continuing the research despite offering support.','She was provided with the support she needed to continue the research by her colleagues.','She supported her colleagues because they were unable to continue the research.'],c:2,k:'provide-with',e:'provide somebody with something ↔ somebody be provided with something by ... Phương án C là chuyển Active → Passive mà không đổi nghĩa.',d:['A phủ định thông tin support.','B biến hỗ trợ thành ngăn cản.','D đảo vai trò người hỗ trợ.']},
+{p:'Her discovery was one of the most impressive achievements of her career.',o:['Her career was more impressive than her discovery.','She made the discovery before achieving anything important.','No other researcher had ever made such a discovery.','The discovery ranked among her most remarkable career achievements.'],c:3,k:'scope-restatement',e:'one of the most impressive achievements ↔ rank among the most remarkable achievements. D giữ đúng mức độ và phạm vi, không tuyệt đối hóa.',d:['A tạo phép so sánh không có trong câu gốc.','B thêm timeline không được nêu.','C tuyệt đối hóa “No other researcher had ever...”, vượt phạm vi câu gốc.']}
+];
+const p2Data=p2Raw.map((x,i)=>({id:'p2_'+(i+1),section:'p2',type:'mcq',prompt:x.p,options:x.o.map((t,j)=>({id:'o'+j,text:t})),correctOptionId:'o'+x.c,primaryConcept:x.k,explanation:x.e,distractors:x.d}));
+
+const p3Base=[
+{t:'mcq',p:'Which phrase best means “được nhiều người ngưỡng mộ vì”?',o:['be widely admired for','be provided with','conduct research into','rank among'],c:0,k:'admired-for',r:'Cụm cần nhớ: be widely admired for sth = được nhiều người ngưỡng mộ vì điều gì.'},
+{t:'fill',p:'Complete: make an important ______ = có một phát hiện quan trọng.',a:['discovery'],k:'discovery',r:'Chunk: make an important discovery.'},
+{t:'mcq',p:'The team ______ research into a new treatment for several years.',o:['conducted','made','received','attended'],c:0,k:'conduct-research',r:'Collocation chuẩn: conduct research into/on sth.'},
+{t:'fill',p:'Complete: achieve ______ in a competitive field.',a:['success'],k:'success-in',r:'Chunk: achieve success in sth.'},
+{t:'mcq',p:'The hospital provided the research team ______ specialist equipment.',o:['for','to','with','on'],c:2,k:'provide-with',r:'provide sb with sth.'},
+{t:'fill',p:'Complete: have a profound ______ on modern science.',a:['impact'],k:'impact-on',r:'have a profound impact on sth = có ảnh hưởng sâu sắc đến.'},
+{t:'mcq',p:'During the experiment, one of the most important ______ was recorded on the final day.',o:['achievement','achievements','achieving','achieve'],c:1,k:'one-of-plural',r:'one of + ... + plural noun → achievements.'},
+{t:'mcq',p:'The young scientists who ______ on the project received an award.',o:['was working','were working','is working','has worked'],c:1,k:'agreement',r:'who thay cho scientists số nhiều → were working.'},
+{t:'fill',p:'Complete: She was admired ______ her courage.',a:['for'],k:'admired-for',r:'be admired for sth; admired by + person.'},
+{t:'mcq',p:'While the nurses ______ the patient, the alarm suddenly rang.',o:['were examining','examined','have examined','had examined'],c:0,k:'past-continuous',r:'Background đang diễn ra → Past Continuous; sự kiện ngắn “rang” → Past Simple.'},
+{t:'mcq',p:'While the team was checking the figures, they ______ a serious error.',o:['were noticing','noticed','have noticed','had been noticing'],c:1,k:'past-event',r:'Sự nhận ra là sự kiện xảy ra trong quá trình đang kiểm tra → noticed.'},
+{t:'fill',p:'Complete the comparative: far ______ challenging than expected.',a:['more'],k:'comparative',r:'far + comparative: far more challenging than.'},
+{t:'mcq',p:'Only ______ researchers had previous experience with this equipment.',o:['a little','little','much','a few'],c:3,k:'quantifiers',r:'researchers = plural countable noun → a few.'},
+{t:'mcq',p:'Which sentence preserves the meaning of “She did not understand the result until she checked the data again”?',o:['Only after checking the data again did she understand the result.','She understood the result before checking the data again.','She checked the data because she had already understood the result.','The result stopped her from checking the data again.'],c:0,k:'only-after',r:'not ... until ↔ Only after ... did + S + V.'},
+{t:'fill',p:'Complete: Her courage earned her widespread ______.',a:['admiration'],k:'admired-for',r:'earn widespread admiration ↔ be widely admired.'},
+{t:'mcq',p:'Which is the safest paraphrase of “one of the most impressive achievements”?',o:['the only achievement worth mentioning','among the most remarkable achievements','more impressive than every other achievement','an achievement made before all others'],c:1,k:'scope-restatement',r:'“one of the most” giữ phạm vi thuộc một nhóm nổi bật, không biến thành “the only” hay tuyệt đối hóa.'},
+{t:'fill',p:'Complete: pursue a ______ in medicine.',a:['career'],k:'career',r:'pursue a career in + field.'},
+{t:'mcq',p:'After several failed attempts, the scientists finally made a major ______.',o:['breakthrough','marriage','childhood','organisation'],c:0,k:'breakthrough',r:'make a major breakthrough = tạo bước đột phá lớn.'},
+{t:'fill',p:'Complete: graduate ______ university.',a:['from'],k:'graduate-from',r:'graduate from university.'},
+{t:'mcq',p:'She received an award ______ her contribution to public health.',o:['for','with','on','at'],c:0,k:'award-for',r:'receive an award for sth.'},
+{t:'mcq',p:'Which option correctly shows possession?',o:['it achievements','she achievements','her achievements','hers achievements'],c:2,k:'possession',r:'Trước noun dùng possessive adjective: her achievements.'},
+{t:'fill',p:'Complete: work ______ a doctor.',a:['as'],k:'work-as',r:'work as + job/role.'},
+{t:'mcq',p:'The new technique strongly influenced medical practice. Which source expression is closest?',o:['had a profound impact on','had a difficult childhood','attended college','joined an organisation'],c:0,k:'impact-on',r:'have a profound impact on ↔ strongly influence.'},
+{t:'fill',p:'Complete: at an early ______.',a:['age'],k:'early-age',r:'Fixed expression: at an early age.'}
+];
+
+const knowledge=[
+['PAST SIMPLE vs PAST CONTINUOUS','<b>Past Continuous:</b> was/were + V-ing cho background/hành động đang diễn ra. <b>Past Simple:</b> V2/ed cho sự kiện hoàn tất/xen vào.<br><b>Routine:</b> TIME → EVENT TYPE → RELATION.<br><b>Dễ nhầm:</b> không chọn máy móc chỉ vì thấy when/while.<br><b>Ví dụ:</b> She was treating a patient when the lights went out.'],
+['COLLOCATIONS TRỌNG TÂM','<table><tr><td>make an important discovery</td><td>có một phát hiện quan trọng</td></tr><tr><td>conduct research into/on</td><td>tiến hành nghiên cứu về</td></tr><tr><td>achieve success in</td><td>đạt thành công trong</td></tr><tr><td>make a major breakthrough</td><td>tạo bước đột phá lớn</td></tr><tr><td>provide sb with sth</td><td>cung cấp cho ai cái gì</td></tr><tr><td>have a profound impact on</td><td>có ảnh hưởng sâu sắc đến</td></tr></table>'],
+['BIOGRAPHY / CAREER CHUNKS','<table><tr><td>attend school / college</td><td>đi học / theo học</td></tr><tr><td>graduate from university</td><td>tốt nghiệp đại học</td></tr><tr><td>begin / pursue a career in</td><td>bắt đầu / theo đuổi sự nghiệp trong</td></tr><tr><td>work as</td><td>làm nghề / làm việc với tư cách</td></tr><tr><td>join an organisation</td><td>gia nhập tổ chức</td></tr><tr><td>during one’s career</td><td>trong suốt sự nghiệp</td></tr><tr><td>at an early age</td><td>khi còn trẻ</td></tr></table>'],
+['ADMIRATION & PARAPHRASE','<b>be admired for sth</b> = được ngưỡng mộ vì.<br><b>be admired by sb</b> = được ai ngưỡng mộ.<br><b>be widely admired for</b> ↔ <b>earn widespread admiration for</b>.<br><b>Dễ nhầm:</b> by = tác nhân; for = lý do.'],
+['WORD FORM','Sau <b>article/possessive + adjective</b> thường cần noun: <i>an important discovery</i>, <i>an impressive achievement</i>.<br>Word family cần nhớ: discover → discovery; achieve → achievement; admire → admiration; impress → impressive.'],
+['QUANTIFIERS','<b>a few + plural countable noun</b>: a few doctors/researchers.<br><b>a little + uncountable noun</b>: a little time/information.<br><b>little</b> thường mang sắc thái gần như không có; <b>much</b> đi với uncountable noun.'],
+['COMPARISON','Tính từ dài: <b>more + adjective + than</b>.<br>Từ nhấn mạnh: <b>far/much/a lot + comparative</b> → far more challenging than.<br>Không dùng <i>as challenging than</i>.'],
+['ONE OF + PLURAL','Cấu trúc: <b>one of + the/possessive + superlative + plural noun</b>.<br>Ví dụ: one of her greatest <b>achievements</b>.<br>Chủ ngữ trung tâm vẫn là <b>one</b> nên động từ chính thường số ít.'],
+['RELATIVE CLAUSE AGREEMENT','Động từ sau <b>who</b> hòa hợp với danh từ mà who thay thế:<br>a scientist who <b>was</b> working / scientists who <b>were</b> working.'],
+['POSSESSION','Trước noun cần possessive adjective: <b>her achievements</b>, không phải <i>it achievements</i>.<br>Phân biệt: she (subject) / her (object hoặc possessive adjective) / hers (possessive pronoun).'],
+['RESTATEMENT: NOT...UNTIL','<b>not ... until</b> ↔ <b>Only after + N/V-ing + auxiliary + S + V</b>.<br>Ví dụ: She did not realise it until she checked again. ↔ Only after checking again did she realise it.'],
+['RESTATEMENT: GIỮ SCOPE','Khi paraphrase phải giữ nguyên <b>subject, time, cause–effect, degree, scope</b>.<br><i>one of the most impressive</i> ↔ <i>among the most remarkable</i>; không đổi thành <i>the only</i> hoặc “No other ... ever ...”.']
+];
+
+function norm(s){return String(s).trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ')}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'}); if(id==='p3View') buildP3(false); updateHome();}
+function stat(section,data){const s=state[section];let done=0,correct=0;data.forEach(q=>{if(s[q.id]?.answered){done++;if(s[q.id].isCorrect)correct++;}});return {done,correct,wrong:done-correct,total:data.length};}
+function progressHTML(x){const pct=x.total?Math.round(x.correct/x.total*100):0;const donePct=x.total?Math.round(x.done/x.total*100):0;return `<div class="progress-row"><b>Đã làm ${x.done}/${x.total}</b><span>Đúng ${x.correct}</span><span>Sai ${x.wrong}</span><span>Điểm ${x.correct}/${x.total}</span><span>Tỷ lệ ${pct}%</span></div><div class="bar"><div style="width:${donePct}%"></div></div>`}
+function updateProgress(section,data){const el=document.getElementById(section+'Progress');if(el)el.innerHTML=progressHTML(stat(section,data));updateHome();}
+function updateHome(){const s1=stat('p1',p1Data),s2=stat('p2',p2Data),s3=stat('p3',currentP3||[]);document.getElementById('homeP1').textContent=`Tiến độ: ${s1.done}/${s1.total} • Đúng ${s1.correct}`;document.getElementById('homeP2').textContent=`Tiến độ: ${s2.done}/${s2.total} • Đúng ${s2.correct}`;document.getElementById('homeP3').textContent=`Tiến độ: ${s3.done}/${s3.total||24} • Đúng ${s3.correct}`}
+function renderMCQ(q,container,section,detail=false){const card=document.createElement('article');card.className='qcard';card.id=q.id;const num=q.id.split('_')[1];const numEl=document.createElement('div');numEl.className='qnum';numEl.textContent='CÂU '+num;const p=document.createElement('div');p.className='prompt';p.textContent=q.prompt;const opts=document.createElement('div');opts.className='opts';q.options.forEach((op,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=String.fromCharCode(65+i)+'. '+op.text;b.dataset.optionId=op.id;b.addEventListener('click',()=>answerMCQ(q,op.id,card,section,detail));opts.appendChild(b)});card.append(numEl,p,opts);container.appendChild(card);restore(q,card,section,detail)}
+function answerMCQ(q,optionId,card,section,detail){if(state[section][q.id]?.answered)return;const isCorrect=optionId===q.correctOptionId;state[section][q.id]={answered:true,selectedOptionId:optionId,isCorrect};applyAnswered(q,card,section,detail);updateProgress(section,section==='p1'?p1Data:section==='p2'?p2Data:currentP3)}
+function renderFill(q,container,section){const card=document.createElement('article');card.className='qcard';card.id=q.id;const num=q.id.split('_')[1];const n=document.createElement('div');n.className='qnum';n.textContent='CÂU '+num;const p=document.createElement('div');p.className='prompt';p.textContent=q.prompt;const row=document.createElement('div');row.className='fillrow';const input=document.createElement('input');input.type='text';input.setAttribute('aria-label','Nhập câu trả lời');const btn=document.createElement('button');btn.className='btn primary';btn.textContent='KIỂM TRA';btn.addEventListener('click',()=>{if(state[section][q.id]?.answered)return;const val=norm(input.value);const ok=q.acceptedAnswers.some(a=>norm(a)===val);state[section][q.id]={answered:true,value:input.value,isCorrect:ok};applyAnswered(q,card,section,false);updateProgress(section,currentP3)});row.append(input,btn);card.append(n,p,row);container.appendChild(card);restore(q,card,section,false)}
+function restore(q,card,section,detail){if(state[section][q.id]?.answered)applyAnswered(q,card,section,detail)}
+function applyAnswered(q,card,section,detail){const st=state[section][q.id];if(q.type==='mcq'){card.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(b.dataset.optionId===st.selectedOptionId)b.classList.add('selected');if(b.dataset.optionId===q.correctOptionId)b.classList.add('correct');if(b.dataset.optionId===st.selectedOptionId&&!st.isCorrect)b.classList.add('wrong')})}else{const input=card.querySelector('input');const btn=card.querySelector('button');if(input){input.disabled=true;input.value=st.value||''}if(btn)btn.disabled=true}
+ if(card.querySelector('.feedback'))return;const fb=document.createElement('div');fb.className='feedback '+(st.isCorrect?'ok':'bad');const h=document.createElement('h4');h.textContent=st.isCorrect?'✓ Chính xác.':'✗ Chưa chính xác.';fb.appendChild(h);
+ if(section==='p1'){if(!st.isCorrect){const ans=q.options.find(o=>o.id===q.correctOptionId)?.text;const pp=document.createElement('p');pp.textContent='Đáp án đúng: '+ans;fb.appendChild(pp)}}
+ else if(section==='p2'){const chosen=q.options.find(o=>o.id===st.selectedOptionId)?.text;const correct=q.options.find(o=>o.id===q.correctOptionId)?.text;let pp=document.createElement('p');pp.innerHTML='<b>Bạn chọn:</b> '+chosen+'<br><b>Đáp án đúng:</b> '+correct;fb.appendChild(pp);pp=document.createElement('p');pp.textContent=q.explanation;fb.appendChild(pp);const ul=document.createElement('ul');q.distractors.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.appendChild(li)});fb.appendChild(ul)}
+ else{const ans=q.type==='mcq'?q.options.find(o=>o.id===q.correctOptionId)?.text:q.acceptedAnswers[0];if(!st.isCorrect){const pp=document.createElement('p');pp.innerHTML='<b>Đáp án đúng:</b> '+ans;fb.appendChild(pp)}const pp=document.createElement('p');pp.innerHTML='<b>Ghi nhớ:</b> '+q.reminder;fb.appendChild(pp)}
+ card.appendChild(fb)}
+function renderSection(data,containerId,section,detail=false){const c=document.getElementById(containerId);c.innerHTML='';data.forEach(q=>q.type==='fill'?renderFill(q,c,section):renderMCQ(q,c,section,detail));updateProgress(section,data)}
+function resetSection(section){if(!confirm('Làm lại phần này? Kết quả của riêng phần này sẽ được xoá.'))return;state[section]={};if(section==='p1')renderSection(p1Data,'p1List','p1');if(section==='p2')renderSection(p2Data,'p2List','p2',true);if(section==='p3'){state.p3Built=false;buildP3(true)}updateHome()}
+let currentP3=[];
+function buildP3(force){if(state.p3Built&&!force){renderSection(currentP3,'p3List','p3');renderKnowledge();return}const wrongConcepts=[];p2Data.forEach(q=>{const st=state.p2[q.id];if(st?.answered&&!st.isCorrect)wrongConcepts.push(q.primaryConcept)});const uniq=[...new Set(wrongConcepts)];let ordered=[...p3Base];if(uniq.length){ordered.sort((a,b)=>(uniq.includes(b.k)?1:0)-(uniq.includes(a.k)?1:0));document.getElementById('remediationNote').innerHTML='<b>Chế độ củng cố theo lỗi:</b> ưu tiên các nhóm em đã sai ở Phần 2: '+uniq.join(', ')+'. Các nhóm khác vẫn được giữ để ôn cân bằng.'}else{document.getElementById('remediationNote').innerHTML='<b>Core Consolidation:</b> chưa có lỗi Phần 2 để ưu tiên, nên hệ thống dùng bộ củng cố cân bằng toàn Lesson.'}
+currentP3=ordered.map((x,i)=>x.t==='mcq'?{id:'p3_'+(i+1),section:'p3',type:'mcq',prompt:x.p,options:x.o.map((t,j)=>({id:'o'+j,text:t})),correctOptionId:'o'+x.c,primaryConcept:x.k,reminder:x.r}:{id:'p3_'+(i+1),section:'p3',type:'fill',prompt:x.p,acceptedAnswers:x.a,primaryConcept:x.k,reminder:x.r});state.p3Built=true;renderKnowledge();renderSection(currentP3,'p3List','p3')}
+function renderKnowledge(){const c=document.getElementById('knowledgeTop');c.innerHTML='';knowledge.forEach(([t,html])=>{const d=document.createElement('article');d.className='kcard';d.innerHTML='<h3>'+t+'</h3><div>'+html+'</div>';c.appendChild(d)})}
+
+document.getElementById('openBtn').addEventListener('click',()=>{if(document.getElementById('pw').value===PASSWORD){document.getElementById('pwMsg').textContent='';showView('homeView')}else document.getElementById('pwMsg').textContent='❌ Mật khẩu chưa đúng. Vui lòng thử lại.'});document.getElementById('pw').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('openBtn').click()});
+document.addEventListener('click',e=>{const go=e.target.closest('[data-go]');if(go)showView(go.dataset.go);const r=e.target.closest('[data-reset]');if(r)resetSection(r.dataset.reset)});document.getElementById('reviewKnowledge').addEventListener('click',()=>document.getElementById('knowledgeTop').scrollIntoView({behavior:'smooth',block:'start'}));
+renderSection(p1Data,'p1List','p1');renderSection(p2Data,'p2List','p2',true);renderKnowledge();updateHome();
+</script>
+</body>
+</html>
